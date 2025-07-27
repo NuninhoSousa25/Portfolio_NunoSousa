@@ -604,27 +604,61 @@ footer {
 
 /* Project content sections */
 .project-content {
-    max-width: 1000px;
+    max-width: 1200px;
     margin: 0 auto;
     padding: 0 var(--side-padding);
 }
 
+.project-main-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    margin: 3rem 0;
+    align-items: start;
+}
+
+.project-featured-image {
+    position: sticky;
+    top: calc(var(--header-height) + 2rem);
+}
+
+.project-featured-image img {
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    object-fit: cover;
+    transition: all var(--transition-normal);
+}
+
+.project-featured-image img:hover {
+    transform: scale(1.02);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* Right side - Text content */
+.project-text-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
 .project-description {
-    margin-bottom: 3rem;
-    text-align: center;
+    margin-bottom: 0; /* Remove default margin since we're using gap */
 }
 
 .project-description p {
-    font-size: 1rem; /* Reduced from 1.1rem */
-    line-height: 1.7; /* Reduced from 1.8 */
+    font-size: 1rem;
+    line-height: 1.7;
     color: var(--text-muted);
-    max-width: 800px;
-    margin: 0 auto 1.5rem;
+    margin: 0 0 1.5rem;
+    text-align: left; /* Align text to left instead of center */
 }
+
 
 /* Project details section - smaller header */
 .project-details {
-    margin: 3rem 0;
+    margin: 0; /* Remove default margins */
     padding: 2rem;
     background: var(--secondary-bg);
     border: 1px solid var(--border-color);
@@ -668,13 +702,22 @@ footer {
     color: var(--text-muted);
     font-size: 0.9rem; /* Smaller for nested items */
 }
-
-/* Gallery remains the same */
+/* Additional gallery below main content */
 .project-gallery {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 2rem;
-    margin: 3rem 0;
+    margin: 4rem 0 3rem;
+}
+
+.project-gallery h3 {
+    grid-column: 1 / -1;
+    font-size: 1.3rem;
+    color: var(--accent-color);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 1rem;
 }
 
 .gallery-item {
@@ -870,6 +913,19 @@ footer {
         padding: 1.5rem 0.8rem 0.8rem;
     }
 
+     .project-main-content {
+        gap: 1.5rem;
+    }
+    
+    .project-details {
+        padding: 1.5rem;
+    }
+    
+    .project-gallery {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        margin: 3rem 0 2rem;
+    }
 
      .project-hero {
         padding: 2rem 0 1.5rem;

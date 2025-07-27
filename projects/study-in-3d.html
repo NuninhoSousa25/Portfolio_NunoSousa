@@ -5,21 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>A Study in 3D - Nuno Sousa</title>
     <link rel="stylesheet" href="../css/styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <header>
-        <nav>
+    <!-- === CONSISTENT HEADER === -->
+    <header id="main-header"> 
+        <div class="header-content"> 
+            <h1>NUNO SOUSA</h1>
+            <p class="subtitle">✷ Artist ✷ Teacher ✷ Researcher ✷</p>
+        </div>
+        <nav id="main-nav">
             <ul>
-                <li><a href="../index.html">Home</a></li>
-                <li><a href="../about.html">About</a></li>
-                <li><a href="../projects.html">Projects</a></li>
-                <li><a href="../contact.html">Contact</a></li>
+                <li><a href="../index.html#home">Home</a></li>
+                <li><a href="../index.html#projects">Projects</a></li>
+                <li><a href="../index.html#about">About</a></li>
+                <li><a href="../index.html#cv">CV</a></li>
+                <li><a href="../index.html#contact">Contact</a></li>
             </ul>
         </nav>
     </header>
 
     <main class="project-page">
+        <!-- Project Title Section -->
         <section class="project-hero">
             <h1>A Study in 3D</h1>
             <div class="project-meta">
@@ -28,15 +34,34 @@
             </div>
         </section>
 
+        <!-- Main Content Area -->
         <section class="project-content">
-            <div class="project-description">
-                <p>A comprehensive exploration of 3D modeling and animation techniques, showcasing various aspects of digital art creation.</p>
+            <div class="project-main-content">
+                <!-- Left Side - Featured Image -->
+                <div class="project-featured-image">
+                    <img src="../images/study-in-3d/study-in-3d-1.jpg" alt="A Study in 3D - Main Image">
+                </div>
+
+                <!-- Right Side - Text Content -->
+                <div class="project-text-content">
+                    <div class="project-description">
+                        <p>A comprehensive exploration of 3D modeling and animation techniques, showcasing various aspects of digital art creation.</p>
+                    </div>
+
+                    <div class="project-details">
+                        <h2>Project Details</h2>
+                        <ul>
+                            <li><strong>Software Used:</strong> Blender, Substance Painter</li>
+                            <li><strong>Techniques:</strong> 3D Modeling, Texturing, Animation</li>
+                            <li><strong>Duration:</strong> 3 months</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
 
+            <!-- Additional Gallery Section -->
             <div class="project-gallery">
-                <div class="gallery-item">
-                    <img src="../images/study-in-3d/study-in-3d-1.jpg" alt="A Study in 3D - Image 1">
-                </div>
+                <h3>Project Gallery</h3>
                 <div class="gallery-item">
                     <img src="../images/study-in-3d/study-in-3d-2.jpg" alt="A Study in 3D - Image 2">
                 </div>
@@ -44,27 +69,21 @@
                     <img src="../images/study-in-3d/study-in-3d-3.jpg" alt="A Study in 3D - Image 3">
                 </div>
             </div>
-
-            <div class="project-details">
-                <h2>Project Details</h2>
-                <ul>
-                    <li><strong>Software Used:</strong> Blender, Substance Painter</li>
-                    <li><strong>Techniques:</strong> 3D Modeling, Texturing, Animation</li>
-                    <li><strong>Duration:</strong> 3 months</li>
-                </ul>
-            </div>
         </section>
+
+        <!-- Navigation -->
+        <div class="project-navigation">
+            <a href="../index.html#projects" class="back-to-projects">
+                <span class="nav-icon">←</span>
+                <span>Back to Projects</span>
+            </a>
+        </div>
     </main>
 
     <footer>
-        <div class="social-links">
-            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
-            <a href="#" class="social-link"><i class="fab fa-artstation"></i></a>
-            <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
-        </div>
-        <p>&copy; 2024 Nuno Sousa. All rights reserved.</p>
+        <p>&copy; 2025 Nuno Sousa. All rights reserved.</p>
     </footer>
 
-    <script src="../main.js"></script>
+    <script src="../js/main.js"></script>
 </body>
-</html> 
+</html>

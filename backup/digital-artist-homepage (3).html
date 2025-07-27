@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuno Sousa | 3D Artist</title>
+    <style>
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Courier New', monospace;
+            background-color: #121212;
+            color: #f0f0f0;
+            line-height: 1.6;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* Typography */
+        h1, h2, h3 {
+            font-weight: normal;
+            letter-spacing: 3px;
+            color: #ffffff;
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 0.5rem;
+            letter-spacing: 6px;
+        }
+        
+        h2 {
+            font-size: 2.2rem;
+            margin: 2rem 0 1rem;
+            letter-spacing: 4px;
+            padding-bottom: 0.5rem;
+        }
+        
+        .subtitle {
+            letter-spacing: 3px;
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            color: #cccccc;
+            word-spacing: 1rem;
+        }
+        
+        p {
+            margin-bottom: 1rem;
+            color: #cccccc;
+        }
+        
+        /* Navigation */
+        nav {
+            padding: 1rem 0;
+            margin-bottom: 2rem;
+            position: sticky;
+            top: 0;
+            background-color: #121212;
+            z-index: 1000;
+            border-bottom: 1px solid #333;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav li {
+            margin-right: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.9rem;
+        }
+        
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        nav a:hover {
+            border-bottom: 1px solid #ffffff;
+            color: #f0f0f0;
+        }
+        
+        /* Page Index */
+        .page-index {
+            position: fixed;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 100;
+        }
+        
+        .index-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #555;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .index-dot.active {
+            background-color: #ffffff;
+            transform: scale(1.2);
+        }
+        
+        /* Home Section */
+        .home-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 3rem 0;
+        }
+        
+        .home-bio {
+            text-align: center;
+            max-width: 800px;
+            margin: 2rem auto 0;
+        }
+        
+        .instagram-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 1.5rem 0;
+            color: #ffffff;
+            text-decoration: none;
+            transition: transform 0.3s, color 0.3s;
+        }
+        
+        .instagram-link:hover {
+            transform: translateY(-3px);
+            color: #cccccc;
+        }
+        
+        .instagram-icon {
+            margin-right: 10px;
+        }
+        
+        /* Slideshow */
+        .slideshow-container {
+            position: relative;
+            width: 100%;
+            max-width: 1000px;
+            height: 500px;
+            overflow: hidden;
+            border: 1px solid #333;
+        }
+        
+        .slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1.5s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .slide.active {
+            opacity: 1;
+        }
+        
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        /* Project Grid */
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .project-item {
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #333;
+            height: 300px;
+            transition: all 0.3s ease;
+        }
+        
+        .project-item:hover {
+            transform: scale(1.02);
+            border-color: #555;
+        }
+        
+        .project-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: opacity 0.3s;
+        }
+        
+        .project-title {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 0.5rem;
+            text-align: center;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+        }
+        
+        /* About Section */
+        .about-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin: 3rem 0;
+        }
+        
+        .about-image {
+            width: 100%;
+            max-height: 500px;
+            object-fit: cover;
+            border: 1px solid #333;
+        }
+        
+        /* CV Section */
+        .cv-section {
+            margin: 3rem 0;
+        }
+        
+        .cv-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .cv-item {
+            border: 1px solid #333;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .cv-item:hover {
+            border-color: #555;
+            transform: translateY(-5px);
+        }
+        
+        .cv-item h3 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+        }
+        
+        .cv-item ul {
+            list-style-position: inside;
+            margin-left: 1rem;
+        }
+        
+        .cv-item li {
+            margin-bottom: 0.5rem;
+            color: #cccccc;
+        }
+        
+        /* Contact Section */
+        .contact-section {
+            margin: 3rem 0;
+            text-align: center;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .social-icon {
+            color: #ffffff;
+            font-size: 1.5rem;
+            transition: transform 0.3s, color 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+        }
+        
+        .social-icon:hover {
+            transform: translateY(-5px);
+            color: #cccccc;
+        }
+        
+        .icon-label {
+            margin-top: 0.5rem;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        /* Footer */
+        footer {
+            margin-top: 3rem;
+            padding-top: 1rem;
+            border-top: 1px solid #333;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #999;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+            }
+            
+            nav li {
+                margin-bottom: 0.5rem;
+            }
+            
+            .slideshow-container {
+                height: 300px;
+            }
+            
+            .page-index {
+                display: none;
+            }
+            
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .social-links {
+                flex-wrap: wrap;
+            }
+            
+            .about-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>NUNO SOUSA</h1>
+        <p class="subtitle">✷ Artist ✷ Teacher ✷ Researcher ✷</p>
+    </header>
+    
+    <nav id="main-nav">
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#cv">CV</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+    
+    <div class="page-index">
+        <div class="index-dot active" data-section="home"></div>
+        <div class="index-dot" data-section="projects"></div>
+        <div class="index-dot" data-section="about"></div>
+        <div class="index-dot" data-section="cv"></div>
+        <div class="index-dot" data-section="contact"></div>
+    </div>
+    
+    <main>
+        <section id="home">
+            <div class="home-container">
+                <div class="slideshow-container">
+                    <div class="slide active">
+                        <img src="/api/placeholder/1000/500" alt="Nuno Sousa Artwork 1">
+                    </div>
+                    <div class="slide">
+                        <img src="/api/placeholder/1000/500" alt="Nuno Sousa Artwork 2">
+                    </div>
+                    <div class="slide">
+                        <img src="/api/placeholder/1000/500" alt="Nuno Sousa Artwork 3">
+                    </div>
+                </div>
+                
+                <div class="home-bio">
+                    <p>Nuno Sousa is an artist, teacher, and researcher specializing in 3D digitization techniques. His work focuses on 3D modeling, rendering, and photogrammetry, which he applies both as a professor at ISCE Douro and in his research at Cultivamos Cultura.</p>
+                    
+                    <a href="https://instagram.com/nuno_sousa_25" class="instagram-link" target="_blank">
+                        <span class="instagram-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                            </svg>
+                        </span>
+                        <span>nuno_sousa_25</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+        
+        <section id="projects">
+            <h2>PROJECTS</h2>
+            <p>Welcome to my art installation projects. My work focuses on creating immersive and interactive experiences through the use of digital media, sculptural elements, and new technologies.</p>
+            
+            <div class="project-grid">
+                <div class="project-item">
+                    <img src="/api/placeholder/400/400" alt="A Study in 3D">
+                    <div class="project-title">A Study in 3D</div>
+                </div>
+                <div class="project-item">
+                    <img src="/api/placeholder/400/400" alt="Digital Debri installation">
+                    <div class="project-title">Digital Debri</div>
+                </div>
+                <div class="project-item">
+                    <img src="/api/placeholder/400/400" alt="Sediments artwork">
+                    <div class="project-title">Sediments</div>
+                </div>
+                <div class="project-item">
+                    <img src="/api/placeholder/400/400" alt="Gathered Framents installation">
+                    <div class="project-title">Gathered Framents</div>
+                </div>
+                <div class="project-item">
+                    <img src="/api/placeholder/400/400" alt="Os Nossos beings ar">
+                    <div class="project-title">Os Nossos beings ar</div>
+                </div>
+                <div class="project-item">
+                    <img src="/api/placeholder/400/400" alt="LIMBO w/ André Araujo">
+                    <div class="project-title">LIMBO w/ André Araujo</div>
+                </div>
+                <div class="project-item">
+                    <img src="/api/placeholder/400/400" alt="O Caco">
+                    <div class="project-title">O Caco</div>
+                </div>
+                <div class="project-item">
+                    <img src="/api/placeholder/400/400" alt="Forget to Protect">
+                    <div class="project-title">Forget to Protect</div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="about">
+            <h2>ABOUT</h2>
+            <div class="about-container">
+                <div class="about-image-container">
+                    <img src="/api/placeholder/500/500" alt="Nuno Sousa - 3D Artist" class="about-image">
+                </div>
+                <div class="about-text">
+                    <p>Nuno Sousa é um artista, professor e investigador especializado em técnicas de digitalização 3D. O seu trabalho centra-se na modelação 3D, renderização e fotogrametria, que aplica tanto como professor no ISCE Douro como na sua investigação na Cultivamos Cultura. Onde se dedica ao desenvolvimento de metodologias de digitalização e contribui para a criação de arquivos digitais do acervo artístico da instituição.</p>
+                    
+                    <p>Licenciado em Produção de Conteúdos Interativos e Multimédia, pelo Instituto Superior de Ciências Educativas do Douro, em 2020, Mestre em Criação Artística Contemporânea, pela Universidade de Aveiro, em 2022, e doutorando em Criação Artística pela Universidade de Aveiro.</p>
+                    
+                    <p>É investigador do CI-ISCE, (Centro de Investigação do ISCE Douro) onde desenvolve investigação em Criação de Conteúdos 3D: Realidade Virtual; Modelação e Renderização de Conteúdos 3D.</p>
+                    
+                    <p>Tem lecionado na área de Modelação 3D no Instituto Superior de Ciências Educativas do Douro e integra a equipa da "Cultivamos Cultura", onde se dedica ao desenvolvimento de metodologias de digitalização e contribui para a criação do arquivo digital do acervo da instituição.</p>
+                </div>
+            </div>
+        </section>
+        
+        <section id="cv" class="cv-section">
+            <h2>CURRICULUM VITAE</h2>
+            
+            <div class="cv-grid">
+                <div class="cv-item">
+                    <h3>EDUCATION</h3>
+                    <ul>
+                        <li>PhD in Artistic Creation (Ongoing)<br>Universidade de Aveiro, Portugal</li>
+                        <li>Master in Contemporary Artistic Creation<br>Universidade de Aveiro, Portugal (2020-2022)</li>
+                        <li>Erasmus in Cinema<br>Krzysztof Kieślowski Faculty, Poland (2019)</li>
+                        <li>Degree in Multimedia and Interactive Content Production<br>ISCE Douro, Portugal (2018-2020)</li>
+                    </ul>
+                </div>
+                
+                <div class="cv-item">
+                    <h3>PROFESSIONAL EXPERIENCE</h3>
+                    <ul>
+                        <li>Integrated Researcher<br>Centro de Investigação do ISCE Douro (2024-Present)</li>
+                        <li>Teacher - Digital Art Laboratory<br>ISCE Douro, Portugal (2024-Present)</li>
+                        <li>Teacher - 3D Modelling<br>ISCE Douro, Portugal (2021-Present)</li>
+                        <li>3D Digital Transitioning Researcher<br>Cultivamos Cultura, Portugal (2021-Present)</li>
+                        <li>Freelancer in 3D Modelling (2017-Present)</li>
+                    </ul>
+                </div>
+                
+                <div class="cv-item">
+                    <h3>RECENT EXHIBITIONS</h3>
+                    <ul>
+                        <li>Forget to Protect | Wax Sculptures<br>Metamorphosis, Ectopia Lab, Lisboa (2024)</li>
+                        <li>Musgos | Live VJ performance<br>Alive Festival, Canelas, Aveiro (2024)</li>
+                        <li>Living with cork | Installation<br>Ressonancia, Lagos, Faro (2024)</li>
+                        <li>Os Nossos Seres São Iguais<br>Reimaginados, Ectopia Lab, Lisbon (2023)</li>
+                        <li>Digital Debri | Video installation<br>Porta-Jazz, Porto (2022)</li>
+                    </ul>
+                </div>
+                
+                <div class="cv-item">
+                    <h3>ACADEMIC PAPERS</h3>
+                    <ul>
+                        <li>Agricultor de memórias<br>23ART2024 International Conference (2024)</li>
+                        <li>Archiving as a Dialogue<br>RE:SOURCE International Conference (2023)</li>
+                        <li>Identifying the Challenges and Solutions for 3D Digitization of Bioart (2023)</li>
+                        <li>LIMBO (2021) - The Sea Levels in a Sound and Visual Immersive Experience<br>ISEA 2022, Barcelona</li>
+                    </ul>
+                </div>
+                
+                <div class="cv-item">
+                    <h3>ARTISTIC RESIDENCIES</h3>
+                    <ul>
+                        <li>Forget to Protect w/ Sofia Aires<br>Ectopia Lab, Lisboa (February 2024)</li>
+                        <li>Presences in Refraction w/André Araujo<br>Ectopia Lab, Lisboa (February 2022)</li>
+                        <li>The Art of the Caramulano Encounter<br>Binaural/Nodar, Portugal (June 2021)</li>
+                    </ul>
+                </div>
+                
+                <div class="cv-item">
+                    <h3>SKILLS</h3>
+                    <ul>
+                        <li>3D Modeling & Rendering</li>
+                        <li>Photogrammetry</li>
+                        <li>Digital Art Creation</li>
+                        <li>3D Digitization Techniques</li>
+                        <li>Virtual Reality Development</li>
+                        <li>Digital Archive Creation</li>
+                        <li>Sound and Visual Performance</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        
+        <section id="contact" class="contact-section">
+            <h2>CONTACT</h2>
+            <p>Contact me for collaborations and inquiries.</p>
+            
+            <div class="social-links">
+                <a href="mailto:nunombsousa25@gmail.com" class="social-icon">
+                    <span>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                            <polyline points="22,6 12,13 2,6"></polyline>
+                        </svg>
+                    </span>
+                    <span class="icon-label">nunombsousa25@gmail.com</span>
+                </a>
+                <a href="https://instagram.com/nuno_sousa_25" class="social-icon" target="_blank">
+                    <span>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                        </svg>
+                    </span>
+                    <span class="icon-label">nuno_sousa_25</span>
+                </a>
+                <a href="https://www.cienciavitae.pt//B812-2348-A1F1" class="social-icon" target="_blank">
+                    <span>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+                        </svg>
+                    </span>
+                    <span class="icon-label">CiênciaVitae</span>
+                </a>
+                <a href="#" class="social-icon">
+                    <span>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                            <rect x="2" y="9" width="4" height="12"></rect>
+                            <circle cx="4" cy="4" r="2"></circle>
+                        </svg>
+                    </span>
+                    <span class="icon-label">LinkedIn</span>
+                </a>
+                <a href="#" class="social-icon">
+                    <span>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                            <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                            <polyline points="21 15 16 10 5 21"></polyline>
+                        </svg>
+                    </span>
+                    <span class="icon-label">Behance</span>
+                </a>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 Nuno Sousa. All rights reserved.</p>
+    </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Slideshow functionality
+            const slides = document.querySelectorAll('.slide');
+            let currentSlide = 0;
+            
+            function showSlide(n) {
+                // Hide all slides
+                slides.forEach(slide => {
+                    slide.classList.remove('active');
+                });
+                
+                // Set current slide
+                currentSlide = (n + slides.length) % slides.length;
+                
+                // Show current slide
+                slides[currentSlide].classList.add('active');
+            }
+            
+            // Auto slide change
+            setInterval(() => {
+                showSlide(currentSlide + 1);
+            }, 5000); // Change slide every 5 seconds
+            
+            // Page index functionality
+            const sections = ['home', 'projects', 'about', 'cv', 'contact'];
+            const indexDots = document.querySelectorAll('.index-dot');
+            
+            // Smooth scroll to section when clicking index dot
+            indexDots.forEach((dot, index) => {
+                dot.addEventListener('click', () => {
+                    document.getElementById(sections[index]).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+            
+            // Update active index dot based on scroll position
+            window.addEventListener('scroll', () => {
+                const scrollPosition = window.scrollY;
+                
+                sections.forEach((section, index) => {
+                    const element = document.getElementById(section);
+                    const elementPosition = element.offsetTop;
+                    const elementHeight = element.offsetHeight;
+                    
+                    if (scrollPosition >= elementPosition - 200 && 
+                        scrollPosition < elementPosition + elementHeight - 200) {
+                        indexDots.forEach(dot => dot.classList.remove('active'));
+                        indexDots[index].classList.add('active');
+                    }
+                });
+            });
+            
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('nav a').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href').substring(1);
+                    const targetElement = document.getElementById(targetId);
+                    
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
