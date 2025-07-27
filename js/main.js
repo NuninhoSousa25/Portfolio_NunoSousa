@@ -472,3 +472,119 @@ function debounce(func, wait, immediate) {
         if (callNow) func.apply(context, args);
     };
 }
+
+function copyEmailToClipboard(event) {
+    event.preventDefault();
+    
+    const email = 'nunombsousa25@gmail.com';
+    
+    // Try to use the modern clipboard API
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(email).then(() => {
+            showEmailCopiedNotification();
+        }).catch(err => {
+            console.error('Failed to copy email: ', err);
+            fallbackCopyTextToClipboard(email);
+        });
+    } else {
+        // Fallback for older browsers
+        fallbackCopyTextToClipboard(email);
+    }
+}
+
+/**
+ * Fallback method for copying text
+ */
+function fallbackCopyTextToClipboard(text) {
+    const textArea = document.createElement("textarea");
+    textArea.value = text;
+    
+    // Avoid scrolling to bottom
+    textArea.style.top = "0";
+    textArea.style.left = "0";
+    textArea.style.position = "fixed";
+    textArea.style.opacity = "0";
+    
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    
+    try {
+        const successful = document.execCommand('copy');
+        if (successful) {
+            showEmailCopiedNotification();
+        } else {
+            console.error('Fallback: Could not copy text');
+        }
+    } catch (err) {
+        console.error('Fallback: Could not copy text: ', err);
+    }
+    
+    document.body.removeChild(textArea);
+}
+
+/**
+ * Show notification when email is copied
+ */
+function showEmailCopiedNotification() {
+    // Remove any existing notification
+    const existingNotification = document.querySelector('.email-copied-notification');
+    if (existingNotification) {
+        existingNotification.remove();
+    }
+    
+    // Create notification
+    const notification = document.createElement('div');
+    notification.className = 'email-copied-notification';
+    notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: var(--accent-color);
+        color: white;
+        padding: 1rem 1.5rem;
+        border-radius: 8px;
+        z-index: 10000;
+        font-size: 0.9rem;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        animation: slideInEmailNotification 0.3s ease-out;
+    `;
+    notification.textContent = 'Email copied to clipboard!';
+    
+    document.body.appendChild(notification);
+    
+    // Auto remove after 3 seconds
+    setTimeout(() => {
+        notification.style.animation = 'slideOutEmailNotification 0.3s ease-out';
+        setTimeout(() => notification.remove(), 300);
+    }, 3000);
+    
+    // Add CSS animations if not already present
+    if (!document.querySelector('#email-notification-styles')) {
+        const style = document.createElement('style');
+        style.id = 'email-notification-styles';
+        style.textContent = `
+            @keyframes slideInEmailNotification {
+                from { 
+                    transform: translateX(100%); 
+                    opacity: 0; 
+                }
+                to { 
+                    transform: translateX(0); 
+                    opacity: 1; 
+                }
+            }
+            @keyframes slideOutEmailNotification {
+                from { 
+                    transform: translateX(0); 
+                    opacity: 1; 
+                }
+                to { 
+                    transform: translateX(100%); 
+                    opacity: 0; 
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    }
+}
