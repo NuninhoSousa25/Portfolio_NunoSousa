@@ -690,3 +690,44 @@ img[loading="lazy"] {
 img[loading="lazy"].loaded {
     opacity: 1;
 }
+
+/* Email copy button specific styling */
+
+.email-copy {
+    cursor: pointer;
+    position: relative;
+}
+
+.email-copy:hover {
+    transform: translateY(-8px) scale(1.05);
+    color: var(--accent-color);
+    border-color: var(--accent-color);
+    box-shadow: 0 10px 25px rgba(255, 87, 34, 0.3);
+}
+
+.email-copy::after {
+    content: "Click to copy";
+    position: absolute;
+    bottom: -35px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 1000;
+}
+
+.email-copy:hover::after {
+    opacity: 1;
+}
+
+/* Make sure email icon is clearly interactive */
+.email-copy .icon-label {
+    user-select: none; /* Prevent text selection */
+}
