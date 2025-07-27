@@ -320,8 +320,6 @@ function initThemeElements() {
     // Add hover effects to project items
     enhanceProjectItems();
     
-    // Add typing effect to subtitle (optional)
-    addTypingEffect();
 }
 
 /**
@@ -394,31 +392,7 @@ function enhanceProjectItems() {
     });
 }
 
-/**
- * Add typing effect to subtitle
- */
-function addTypingEffect() {
-    const subtitle = document.querySelector('.subtitle');
-    if (!subtitle) return;
-    
-    const originalText = subtitle.textContent;
-    const words = originalText.split(' ');
-    let currentWordIndex = 0;
-    
-    function typeWords() {
-        if (currentWordIndex < words.length) {
-            subtitle.textContent = words.slice(0, currentWordIndex + 1).join(' ');
-            currentWordIndex++;
-            setTimeout(typeWords, 200);
-        }
-    }
-    
-    // Start typing effect after a delay
-    setTimeout(() => {
-        subtitle.textContent = '';
-        typeWords();
-    }, 1000);
-}
+
 
 /**
  * Show notification messages
