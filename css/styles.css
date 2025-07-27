@@ -572,6 +572,175 @@ footer {
     background: linear-gradient(135deg, var(--secondary-bg), var(--tertiary-bg));
 }
 
+
+.project-hero {
+    text-align: center;
+    padding: 3rem 0 2rem;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 3rem;
+}
+
+.project-hero h1 {
+    font-size: clamp(1.5rem, 4vw, 2.2rem); /* Reduced from 2rem-3rem */
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+    letter-spacing: 2px; /* Reduced from 3px */
+    line-height: 1.3;
+}
+
+.project-meta {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 1rem;
+}
+
+.project-meta span {
+    color: var(--accent-color);
+    font-size: 0.8rem; /* Reduced from 0.9rem */
+    letter-spacing: 1.5px; /* Reduced from 2px */
+    text-transform: uppercase;
+}
+
+/* Project content sections */
+.project-content {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 var(--side-padding);
+}
+
+.project-description {
+    margin-bottom: 3rem;
+    text-align: center;
+}
+
+.project-description p {
+    font-size: 1rem; /* Reduced from 1.1rem */
+    line-height: 1.7; /* Reduced from 1.8 */
+    color: var(--text-muted);
+    max-width: 800px;
+    margin: 0 auto 1.5rem;
+}
+
+/* Project details section - smaller header */
+.project-details {
+    margin: 3rem 0;
+    padding: 2rem;
+    background: var(--secondary-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+}
+
+.project-details h2 {
+    margin-bottom: 1.5rem;
+    color: var(--accent-color);
+    font-size: 1.3rem; /* Reduced from 1.5rem */
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.project-details ul {
+    list-style: none;
+    padding: 0;
+}
+
+.project-details li {
+    margin-bottom: 1rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    font-size: 0.95rem; /* Slightly smaller */
+}
+
+.project-details strong {
+    color: var(--text-primary);
+    margin-right: 0.5rem;
+    font-size: 0.95rem; /* Consistent with li */
+}
+
+/* Nested lists in project details */
+.project-details ul ul {
+    margin-top: 0.5rem;
+    margin-left: 1.5rem;
+}
+
+.project-details ul ul li {
+    margin-bottom: 0.8rem;
+    color: var(--text-muted);
+    font-size: 0.9rem; /* Smaller for nested items */
+}
+
+/* Gallery remains the same */
+.project-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin: 3rem 0;
+}
+
+.gallery-item {
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: all var(--transition-normal);
+}
+
+.gallery-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    border-color: var(--border-hover);
+}
+
+.gallery-item img {
+    width: 100%;
+    height: auto;
+    min-height: 200px;
+    object-fit: cover;
+    transition: transform var(--transition-normal);
+}
+
+.gallery-item:hover img {
+    transform: scale(1.05);
+}
+
+/* Project navigation */
+.project-navigation {
+    text-align: center;
+    margin: 3rem 0;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.back-to-projects {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-primary);
+    text-decoration: none;
+    padding: 1rem 2rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background: var(--secondary-bg);
+    transition: all var(--transition-normal);
+    font-size: 0.9rem; /* Reduced from 1rem */
+    letter-spacing: 1px;
+}
+
+.back-to-projects:hover {
+    transform: translateY(-3px);
+    color: var(--accent-color);
+    border-color: var(--accent-color);
+    box-shadow: 0 8px 25px rgba(255, 87, 34, 0.2);
+}
+
+.nav-icon {
+    font-size: 1.1rem; /* Reduced from 1.2rem */
+    transition: transform var(--transition-normal);
+}
+
+.back-to-projects:hover .nav-icon {
+    transform: translateX(-3px);
+}
+
 /* Animation Keyframes */
 @keyframes fadeInUp {
     from {
@@ -699,6 +868,52 @@ footer {
     .project-title {
         font-size: 0.8rem;
         padding: 1.5rem 0.8rem 0.8rem;
+    }
+
+
+     .project-hero {
+        padding: 2rem 0 1.5rem;
+    }
+    
+    .project-hero h1 {
+        font-size: 1.4rem; /* Reduced from 1.8rem */
+        letter-spacing: 1.5px;
+    }
+    
+    .project-meta {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .project-meta span {
+        font-size: 0.75rem; /* Smaller on mobile */
+    }
+    
+    .project-description p {
+        font-size: 0.95rem;
+    }
+    
+    .project-details h2 {
+        font-size: 1.2rem;
+    }
+    
+    .project-details li {
+        font-size: 0.9rem;
+    }
+    
+    .project-gallery {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .project-details {
+        padding: 1.5rem;
+        margin: 2rem 0;
+    }
+    
+    .back-to-projects {
+        padding: 0.8rem 1.5rem;
+        font-size: 0.85rem;
     }
     
 }
