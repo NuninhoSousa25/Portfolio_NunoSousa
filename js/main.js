@@ -336,7 +336,7 @@ function createBackgroundParticles() {
         height: 100%;
         pointer-events: none;
         z-index: -1;
-        opacity: 0.1;
+        opacity: 0.15;
     `;
     
     // Create particles
