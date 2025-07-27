@@ -409,15 +409,9 @@ p {
     object-fit: cover;
     border: 1px solid var(--border-color);
     border-radius: 8px;
-    transition: all var(--transition-normal);
-    filter: grayscale(0.3);
+    filter: grayscale(0);
 }
 
-.about-image:hover {
-    filter: grayscale(0);
-    transform: scale(1.02);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-}
 
 /* Enhanced CV Section */
 .cv-grid {
@@ -430,11 +424,10 @@ p {
 .cv-item {
     border: 1px solid var(--border-color);
     padding: 1.5rem;
-    transition: all var(--transition-normal);
     border-radius: 8px;
     background: var(--secondary-bg);
     position: relative;
-    overflow: hidden;
+    /* Remove all hover animations and transitions */
 }
 
 .cv-item::before {
@@ -445,25 +438,69 @@ p {
     width: 100%;
     height: 3px;
     background: linear-gradient(90deg, var(--accent-color), var(--accent-hover));
-    transform: scaleX(0);
-    transition: transform var(--transition-normal);
-}
-
-.cv-item:hover::before {
-    transform: scaleX(1);
-}
-
-.cv-item:hover {
-    transform: translateY(-5px);
-    border-color: var(--border-hover);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    /* Always visible - no transform or hover effects */
 }
 
 .cv-item h3 {
-    margin-bottom: 1rem;
-    font-size: 1.2rem;
+    margin-bottom: 1.2rem;
+    font-size: 1.4rem;
     letter-spacing: 2px;
     color: var(--accent-color);
+    text-transform: uppercase;
+
+}
+
+.cv-item ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.cv-item li {
+    margin-bottom: 1rem; /* Increased spacing between items */
+    padding-left: 1rem;
+    position: relative;
+    color: var(--text-secondary); /* Brighter text */
+    line-height: 1.6; /* Better line spacing */
+    font-size: 0.95rem; /* Slightly larger text */
+}
+
+/* Add custom bullet points for better readability */
+.cv-item li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: var(--accent-color);
+    font-weight: bold;
+}
+
+/* Style nested lists differently */
+.cv-item ul ul {
+    margin-top: 0.5rem;
+    margin-left: 1rem;
+}
+
+.cv-item ul ul li {
+    margin-bottom: 0.6rem;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+.cv-item ul ul li::before {
+    content: '•';
+    color: var(--text-subtle);
+}
+
+/* Improve strong/bold text visibility */
+.cv-item strong {
+    color: var(--text-primary);
+    font-weight: bold;
+}
+
+/* Add better spacing for dates and institutions */
+.cv-item li br + * {
+    color: var(--text-muted);
+    font-style: italic;
 }
 
 /* Enhanced Contact Section */
@@ -604,8 +641,26 @@ footer {
         gap: 2rem;
     }
 
-    .cv-grid {
+    .about-image {
+            max-height: 400px;
+        }
+
+   .cv-grid {
         grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .cv-item {
+        padding: 1.2rem;
+    }
+    
+    .cv-item h3 {
+        font-size: 1.2rem;
+    }
+    
+    .cv-item li {
+        font-size: 0.9rem;
+        line-height: 1.5;
     }
 
     .social-links {
