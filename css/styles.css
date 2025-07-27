@@ -353,6 +353,17 @@ p {
     box-shadow: 0 15px 40px rgba(255, 87, 34, 0.2);
 }
 
+/* Make the entire project item clickable */
+.project-item a {
+    display: block;
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+    color: inherit;
+    position: relative;
+    z-index: 2;
+}
+
 .project-item img {
     width: 100%;
     height: 100%;
@@ -379,6 +390,8 @@ p {
     color: var(--text-secondary);
     z-index: 2;
     transition: all var(--transition-normal);
+    pointer-events: none; /* Prevent text selection issues */
+
 }
 
 .project-item:hover .project-title {
@@ -386,12 +399,14 @@ p {
     transform: translateY(-5px);
 }
 
-.project-item a {
-    display: block;
+.project-item a::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
-    text-decoration: none;
-    color: inherit;
+    z-index: 4;
 }
 
 /* Enhanced About Section */
@@ -671,6 +686,21 @@ footer {
         min-width: 100px;
         padding: 0.8rem;
     }
+
+    .project-grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 1.5rem;
+    }
+    
+    .project-item {
+        height: 250px;
+    }
+    
+    .project-title {
+        font-size: 0.8rem;
+        padding: 1.5rem 0.8rem 0.8rem;
+    }
+    
 }
 
 /* Enhanced scroll behavior */
