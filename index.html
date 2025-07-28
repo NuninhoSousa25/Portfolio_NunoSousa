@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nuno Sousa | 3D Artist</title>
     <link rel="stylesheet" href="css/styles.css">
-
     <style>
         /* * These new rules override or add to your existing styles.css 
          * to create the side-by-side layout for the home section.
@@ -49,7 +48,7 @@
             }
         }
     </style>
-    </head>
+</head>
 <body>
     <header id="main-header"> 
         <div class="header-content"> 
@@ -58,15 +57,26 @@
         </div>
         <nav id="main-nav">
             <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#products">Products</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="cv.html">CV</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="#home" data-lang="en">Home</a></li>
+                <li><a href="#home" data-lang="pt">Início</a></li>
+                <li><a href="#projects" data-lang="en">Projects</a></li>
+                <li><a href="#projects" data-lang="pt">Projetos</a></li>
+                <li><a href="#products" data-lang="en">Products</a></li>
+                <li><a href="#products" data-lang="pt">Produtos</a></li>
+                <li><a href="#about" data-lang="en">About</a></li>
+                <li><a href="#about" data-lang="pt">Sobre</a></li>
+                <li><a href="cv.html" data-lang="en">CV</a></li>
+                <li><a href="cv.html" data-lang="pt">CV</a></li>
+                <li><a href="#contact" data-lang="en">Contact</a></li>
+                <li><a href="#contact" data-lang="pt">Contato</a></li>
             </ul>
         </nav>
+        <div class="language-toggle">
+            <span class="lang-option active" data-lang-switch="en">EN</span>
+            <span class="lang-option" data-lang-switch="pt">PT</span>
+        </div>
     </header>
+
     <div class="page-index">
         <div class="index-dot active" data-section="home"></div>
         <div class="index-dot" data-section="projects"></div>
@@ -91,7 +101,9 @@
                 </div>
 
                 <div class="home-bio">
-                    <p>Nuno Sousa is an artist, teacher, and researcher specializing in 3D digitization techniques. His work focuses on 3D modeling, rendering, and photogrammetry, which he applies both as a professor at ISCE Douro and in his research at Cultivamos Cultura.</p>
+                    <p data-lang="en">Nuno Sousa is an artist, teacher, and researcher specializing in 3D digitization techniques. His work focuses on 3D modeling, rendering, and photogrammetry, which he applies both as a professor at ISCE Douro and in his research at Cultivamos Cultura.</p>
+                    
+                    <p data-lang="pt">Nuno Sousa é um artista, professor e investigador especializado em técnicas de digitalização 3D. O seu trabalho centra-se na modelação 3D, renderização e fotogrametria, que aplica tanto como professor no ISCE Douro como na sua investigação na Cultivamos Cultura.</p>
 
                     <a href="https://instagram.com/nuno_sousa_25" class="instagram-link" target="_blank">
                         <span class="instagram-icon">
@@ -105,11 +117,14 @@
                     </a>
                 </div>
             </div>
-            </section>
+        </section>
 
         <section id="projects">
-            <h2>PROJECTS</h2>
-            <p>Welcome to my art installation projects. My work focuses on creating immersive and interactive experiences through the use of digital media, sculptural elements, and new technologies.</p>
+            <h2 data-lang="en">PROJECTS</h2>
+            <h2 data-lang="pt">PROJETOS</h2>
+            
+            <p data-lang="en">Welcome to my art installation projects. My work focuses on creating immersive and interactive experiences through the use of digital media, sculptural elements, and new technologies.</p>
+            <p data-lang="pt">Bem-vindos aos meus projetos de instalação artística. O meu trabalho foca-se na criação de experiências imersivas e interativas através do uso de media digital, elementos esculturais e novas tecnologias.</p>
 
             <div class="project-grid">
                 <div class="project-item">
@@ -158,8 +173,11 @@
         </section>
 
         <section id="products">
-            <h2>PRODUCTS</h2>
-            <p>Explore my 3D assets, tools, and educational resources available on Blender Market and Gumroad.</p>
+            <h2 data-lang="en">PRODUCTS</h2>
+            <h2 data-lang="pt">PRODUTOS</h2>
+            
+            <p data-lang="en">Explore my 3D assets, tools, and educational resources available on Blender Market and Gumroad.</p>
+            <p data-lang="pt">Explore os meus recursos 3D, ferramentas e recursos educacionais disponíveis no Blender Market e Gumroad.</p>
             
             <div class="project-grid">
                 <div class="project-item">
@@ -178,28 +196,44 @@
         </section>
 
         <section id="about">
-            <h2>ABOUT</h2>
+            <h2 data-lang="en">ABOUT</h2>
+            <h2 data-lang="pt">SOBRE</h2>
+            
             <div class="about-container">
                 <div class="about-image-container">
                     <img src="images/profile/1.jpeg" alt="Nuno Sousa - 3D Artist" class="about-image">
                 </div>
                 <div class="about-text">
-                    <p>Nuno Sousa é um artista, professor e investigador especializado em técnicas de digitalização 3D. O seu trabalho centra-se na modelação 3D, renderização e fotogrametria, que aplica tanto como professor no ISCE Douro como na sua investigação na Cultivamos Cultura. Onde se dedica ao desenvolvimento de metodologias de digitalização e contribui para a criação de arquivos digitais do acervo artístico da instituição.</p>
+                    <div data-lang="en">
+                        <p>Nuno Sousa is an artist, teacher, and researcher specializing in 3D digitization techniques. His work focuses on 3D modeling, rendering, and photogrammetry, which he applies both as a professor at ISCE Douro and in his research at Cultivamos Cultura, where he develops digitization methodologies and contributes to creating digital archives of the institution's artistic collection.</p>
 
-                    <p>Licenciado em Produção de Conteúdos Interativos e Multimédia, pelo Instituto Superior de Ciências Educativas do Douro, em 2020, Mestre em Criação Artística Contemporânea, pela Universidade de Aveiro, em 2022, e doutorando em Criação Artística pela Universidade de Aveiro.</p>
+                        <p>He holds a degree in Interactive and Multimedia Content Production from Instituto Superior de Ciências Educativas do Douro (2020), a Master's in Contemporary Artistic Creation from Universidade de Aveiro (2022), and is currently pursuing a PhD in Artistic Creation at Universidade de Aveiro.</p>
 
-                    <p>Tem lecionado na área de Modelação 3D e Arte Digital no Instituto Superior de Ciências Educativas do Douro e integra a equipa da "Cultivamos Cultura", onde se dedica ao desenvolvimento de metodologias de digitalização e contribui para a criação do arquivo digital do acervo da instituição.</p>
+                        <p>He has taught in the areas of 3D Modeling and Digital Art at Instituto Superior de Ciências Educativas do Douro and is part of the "Cultivamos Cultura" team, where he develops digitization methodologies and contributes to creating the institution's digital archive.</p>
+                    </div>
+                    
+                    <div data-lang="pt">
+                        <p>Nuno Sousa é um artista, professor e investigador especializado em técnicas de digitalização 3D. O seu trabalho centra-se na modelação 3D, renderização e fotogrametria, que aplica tanto como professor no ISCE Douro como na sua investigação na Cultivamos Cultura. Onde se dedica ao desenvolvimento de metodologias de digitalização e contribui para a criação de arquivos digitais do acervo artístico da instituição.</p>
+
+                        <p>Licenciado em Produção de Conteúdos Interativos e Multimédia, pelo Instituto Superior de Ciências Educativas do Douro, em 2020, Mestre em Criação Artística Contemporânea, pela Universidade de Aveiro, em 2022, e doutorando em Criação Artística pela Universidade de Aveiro.</p>
+
+                        <p>Tem lecionado na área de Modelação 3D e Arte Digital no Instituto Superior de Ciências Educativas do Douro e integra a equipa da "Cultivamos Cultura", onde se dedica ao desenvolvimento de metodologias de digitalização e contribui para a criação do arquivo digital do acervo da instituição.</p>
+                    </div>
                     
                     <p style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color);">
-                        For a detailed professional history, <strong><a href="cv.html" style="color: var(--accent-color); text-decoration: none; border-bottom: 1px solid var(--accent-color);">view my full Curriculum Vitae</a></strong>.
+                        <span data-lang="en">For a detailed professional history, <strong><a href="cv.html" style="color: var(--accent-color); text-decoration: none; border-bottom: 1px solid var(--accent-color);">view my full Curriculum Vitae</a></strong>.</span>
+                        <span data-lang="pt">Para um histórico profissional detalhado, <strong><a href="cv.html" style="color: var(--accent-color); text-decoration: none; border-bottom: 1px solid var(--accent-color);">veja o meu Curriculum Vitae completo</a></strong>.</span>
                     </p>
                 </div>
             </div>
         </section>
 
         <section id="contact" class="contact-section">
-            <h2>CONTACT</h2>
-            <p>Contact me for collaborations and inquiries.</p>
+            <h2 data-lang="en">CONTACT</h2>
+            <h2 data-lang="pt">CONTATO</h2>
+            
+            <p data-lang="en">Contact me for collaborations and inquiries.</p>
+            <p data-lang="pt">Entre em contato para colaborações e consultas.</p>
 
             <div class="social-links">
                 <a href="#" class="social-icon email-copy" onclick="copyEmailToClipboard(event)">
