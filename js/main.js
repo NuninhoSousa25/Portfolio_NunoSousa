@@ -588,3 +588,127 @@ function showEmailCopiedNotification() {
         document.head.appendChild(style);
     }
 }
+
+// Add this to your existing DOMContentLoaded event listener
+document.addEventListener('DOMContentLoaded', function() {
+    // Your existing initializations...
+    initSlideshow();
+    initPageIndex();
+    initSmoothScrolling();
+    initScrollEffects();
+    initImageLazyLoading();
+    initAnimationObserver();
+    initContactForm();
+    initThemeElements();
+    
+    // Add this new initialization
+    initLanguageToggle();
+});
+
+/**
+ * Language Toggle Functionality
+ */
+function initLanguageToggle() {
+    const langOptions = document.querySelectorAll('.lang-option');
+    const body = document.body;
+    
+    if (!langOptions.length) return;
+    
+    // Get saved language or default to English
+    const savedLang = localStorage.getItem('preferred-language') || 'en';
+    setLanguage(savedLang);
+    
+    langOptions.forEach(option => {
+        option.addEventListener('click', function() {
+            const selectedLang = this.getAttribute('data-lang-switch');
+            setLanguage(selectedLang);
+            localStorage.setItem('preferred-language', selectedLang);
+        });
+    });
+    
+    function setLanguage(lang) {
+        // Update body class
+        body.className = body.className.replace(/lang-\w+/g, '');
+        body.classList.add(`lang-${lang}`);
+        
+        // Update active language option
+        langOptions.forEach(option => {
+            option.classList.remove('active');
+            if (option.getAttribute('data-lang-switch') === lang) {
+                option.classList.add('active');
+            }
+        });
+        
+        // Update page language attribute
+        document.documentElement.lang = lang;
+    }
+}
+
+/**
+ * Enhanced email copy with language support
+ */
+function showEmailCopiedNotification() {
+    // Remove any existing notification
+    const existingNotification = document.querySelector('.email-copied-notification');
+    if (existingNotification) {
+        existingNotification.remove();
+    }
+    
+    // Create notification
+    const notification = document.createElement('div');
+    notification.className = 'email-copied-notification';
+    notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: var(--accent-color);
+        color: white;
+        padding: 1rem 1.5rem;
+        border-radius: 8px;
+        z-index: 10000;
+        font-size: 0.9rem;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        animation: slideInEmailNotification 0.3s ease-out;
+    `;
+    
+    // Check current language and set appropriate message
+    const isPortuguese = document.body.classList.contains('lang-pt');
+    notification.textContent = isPortuguese ? 'Email copiado!' : 'Email copied to clipboard!';
+    
+    document.body.appendChild(notification);
+    
+    // Auto remove after 3 seconds
+    setTimeout(() => {
+        notification.style.animation = 'slideOutEmailNotification 0.3s ease-out';
+        setTimeout(() => notification.remove(), 300);
+    }, 3000);
+    
+    // Add CSS animations if not already present
+    if (!document.querySelector('#email-notification-styles')) {
+        const style = document.createElement('style');
+        style.id = 'email-notification-styles';
+        style.textContent = `
+            @keyframes slideInEmailNotification {
+                from { 
+                    transform: translateX(100%); 
+                    opacity: 0; 
+                }
+                to { 
+                    transform: translateX(0); 
+                    opacity: 1; 
+                }
+            }
+            @keyframes slideOutEmailNotification {
+                from { 
+                    transform: translateX(0); 
+                    opacity: 1; 
+                }
+                to { 
+                    transform: translateX(100%); 
+                    opacity: 0; 
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    }
+}
