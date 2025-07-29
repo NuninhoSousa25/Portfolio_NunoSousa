@@ -109,22 +109,20 @@ p {
     top: 0;
     left: 0;
     width: 100%;
-    background: rgba(18, 18, 18, 0.95);
+    background: rgba(18, 18, 18, 0.40);
     backdrop-filter: blur(10px);
     z-index: 1000;
     border-bottom: 1px solid var(--border-color);
     transition: all var(--transition-normal);
     height: var(--header-height); /* Add explicit height */
     gap: 1rem; /* Add gap between header content and nav section */
-    background: rgba(18, 18, 18, 0.35); /* Changed from 0.95 to 0.75 for more transparency */
-    backdrop-filter: blur(10px);
+ 
 }
 
 
 #main-header.scrolled {
-    background: rgba(18, 18, 18, 0.98);
+    background: rgba(18, 18, 18, 0.45);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-    background: rgba(18, 18, 18, 0.85); /* Slightly more opaque when scrolled */
 
 }
 
@@ -295,6 +293,15 @@ p {
     border: 1px solid var(--border-color);
     border-radius: 8px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    margin: 2rem auto; /* Center with margin */
+
+}
+
+.layout-side-by-side .slideshow-container {
+    flex: 1 1 500px;
+    max-width: 600px;
+    height: 450px;
+    margin: 0; /* Remove auto margin in side-by-side */
 }
 
 .slide {
@@ -306,6 +313,8 @@ p {
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: hidden; /* Ensure images don't overflow */
+
 }
 
 .slide.active {
@@ -962,7 +971,7 @@ body.lang-pt [data-lang="pt"] {
 
     .lang-option {
         padding: 0.1rem 0.3rem;
-        font-size: 0.65rem;
+        font-size: 0.7rem;
     }
 
 
@@ -975,6 +984,10 @@ body.lang-pt [data-lang="pt"] {
     }
 
     .slideshow-container {
+        height: 250px;
+    }
+
+    .layout-side-by-side .slideshow-container {
         height: 250px;
     }
 
