@@ -217,13 +217,7 @@ function initScrollEffects() {
             header.classList.remove('scrolled');
         }
         
-        // Parallax effect for slideshow (if visible)
-        const slideshow = document.querySelector('.slideshow-container');
-        if (slideshow && currentScrollY < window.innerHeight) {
-            const parallaxSpeed = 0.5;
-            slideshow.style.transform = `translateY(${currentScrollY * parallaxSpeed}px)`;
-        }
-        
+      
         lastScrollY = currentScrollY;
     }
     
