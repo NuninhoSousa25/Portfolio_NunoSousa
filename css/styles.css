@@ -116,13 +116,16 @@ p {
     transition: all var(--transition-normal);
     height: var(--header-height); /* Add explicit height */
     gap: 1rem; /* Add gap between header content and nav section */
-
-
+    background: rgba(18, 18, 18, 0.35); /* Changed from 0.95 to 0.75 for more transparency */
+    backdrop-filter: blur(10px);
 }
+
 
 #main-header.scrolled {
     background: rgba(18, 18, 18, 0.98);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    background: rgba(18, 18, 18, 0.85); /* Slightly more opaque when scrolled */
+
 }
 
 .header-content h1 {
@@ -895,11 +898,11 @@ body.lang-pt [data-lang="pt"] {
         flex-direction: column;
         align-items: center;
         text-align: center;
-        padding: 0.3rem var(--side-padding);
+        padding: 0.2rem var(--side-padding);
         height: auto;
         min-height: var(--header-height);
         transition: all var(--transition-normal);
-        gap: 0.5rem; /* Smaller gap on mobile */
+        gap: 0.2rem; /* Smaller gap on mobile */
 
     }
 
@@ -931,7 +934,7 @@ body.lang-pt [data-lang="pt"] {
     .header-nav-section {
         display: flex;
         align-items: center;
-        gap: 0.8rem; /* Slightly reduced gap on mobile */
+        gap: 0.3rem; /* Slightly reduced gap on mobile */
         width: 100%;
         justify-content: center;
         flex-wrap: nowrap;
@@ -940,18 +943,18 @@ body.lang-pt [data-lang="pt"] {
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
-        gap: 0.4rem; /* Even smaller gaps on mobile */
+        gap: 0.3rem; /* Even smaller gaps on mobile */
         margin: 0;
         padding: 0;
     }
 
     #main-nav li {
-        margin: 0 0.3rem 0.3rem; /* Small margin for better mobile spacing */
-        font-size: 0.9rem;
+        margin: 0 0.15rem 0.15rem; /* Small margin for better mobile spacing */
+        font-size: 0.7rem;
     }
 
     .language-toggle {
-        padding: 0.2rem 0.5rem;
+        padding: 0.1rem 0.3rem;
         height: fit-content;
         flex-shrink: 0;
         align-self: center;
@@ -959,7 +962,7 @@ body.lang-pt [data-lang="pt"] {
 
     .lang-option {
         padding: 0.1rem 0.3rem;
-        font-size: 0.7rem;
+        font-size: 0.65rem;
     }
 
 
