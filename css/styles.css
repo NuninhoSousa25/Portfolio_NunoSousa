@@ -1109,6 +1109,19 @@ body.lang-pt [data-lang="pt"] {
         padding: 0.8rem 1.5rem;
         font-size: 0.85rem;
     }
+    footer {
+        border-bottom: 0px solid var(--border-color) !important; /* Remove bottom border */
+        padding: 1.5rem 0; /* Slightly less padding on mobile */
+    }
+    
+    /* Ensure full-width behavior on mobile */
+    body > footer {
+        width: 100vw;
+        left: 50%;
+        right: 50%;
+        margin-left: -50vw;
+        margin-right: -50vw;
+    }
 
   
 }
