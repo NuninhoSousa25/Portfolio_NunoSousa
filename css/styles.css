@@ -112,7 +112,7 @@ p {
     background: rgba(18, 18, 18, 0.40);
     backdrop-filter: blur(10px);
     z-index: 1000;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 0px solid var(--border-color);
     transition: all var(--transition-normal);
     height: var(--header-height); /* Add explicit height */
     gap: 1rem; /* Add gap between header content and nav section */
@@ -581,17 +581,27 @@ p {
     letter-spacing: 1px;
 }
 
-/* Enhanced Footer */
-footer {
-    margin-top: 3rem;
-    padding: 2rem 0;
-    border-top: 1px solid var(--border-color);
+/* Add this new container rule */
+body > footer {
+    position: relative;
+    width: 100vw;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    background: rgba(25,25, 25, 0.55);
+    backdrop-filter: blur(10px);
+    border-top: 0px solid var(--border-color);
+    padding: 1.3rem 0;
     text-align: center;
-    font-size: 0.8rem;
-    color: var(--text-subtle);
-    background: linear-gradient(135deg, var(--secondary-bg), var(--tertiary-bg));
 }
 
+/* Inner content alignment */
+footer .footer-content {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 var(--side-padding);
+}
 
 .project-hero {
     text-align: center;
