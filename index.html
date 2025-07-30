@@ -5,59 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nuno Sousa | 3D Artist</title>
     <link rel="stylesheet" href="css/styles.css">
-    <style>
-        /* * These new rules override or add to your existing styles.css 
-         * to create the side-by-side layout for the home section.
-         */
-
-        /* Target the home container when it has the new layout class */
-        .home-container.layout-side-by-side {
-            flex-direction: row; /* Arrange items horizontally */
-            align-items: center;    /* Vertically center the image and text block */
-            gap: 3rem;              /* Add space between the image and text */
-            justify-content: center;
-            flex-wrap: wrap;        /* Allow items to wrap on smaller screens */
-        }
-
-        /* Assign a flexible base width to the slideshow */
-        .layout-side-by-side .slideshow-container {
-            flex: 1 1 500px; /* Allow it to grow and shrink, with a base width of 500px */
-            max-width: 600px;
-            height: 450px;   /* Adjust height for a better aspect ratio in this layout */
-        }
-
-        /* Assign a flexible base width to the biography text block */
-        .layout-side-by-side .home-bio {
-            flex: 1 1 400px; /* Allow it to grow and shrink, with a base width of 400px */
-            max-width: 500px;
-            text-align: left;/* Align text to the left for better readability */
-            margin: 0;       /* Reset the original margin */
-        }
-
-        /* --- Responsive styles for the new layout --- */
-        @media (max-width: 992px) {
-            .home-container.layout-side-by-side {
-                /* Revert to the original stacked layout on smaller screens */
-                flex-direction: column;
-                gap: 2rem;
-            }
-
-            .layout-side-by-side .home-bio {
-                /* Revert text alignment to center for the stacked view */
-                text-align: center;
-            }
-        }
-    </style>
 </head>
 <body>
   <header id="main-header"> 
-    <div class="header-content"> 
-        <h1>NUNO SOUSA</h1>
-        <p class="subtitle">Artist ✷ Teacher ✷ Researcher</p>
+    <div class="header-content">
+        <h1><a href="#home" class="header-logo-link">NUNO SOUSA</a></h1>
+        <p class="subtitle"> Artist ✷ Teacher ✷ Researcher</p>
     </div>
     
-    <!-- New wrapper for navigation and language toggle -->
-    <div class="header-nav-section">
+    <button class="hamburger-menu" aria-label="Toggle menu" aria-expanded="false" aria-controls="header-nav-section">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+    
+    <div class="header-nav-section" id="header-nav-section">
         <nav id="main-nav">
             <ul>
                 <li><a href="#home" data-lang="en">Home</a></li>
