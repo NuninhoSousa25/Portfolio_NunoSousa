@@ -5,6 +5,7 @@
 
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize all components
+    initMobileMenu(); 
     initSlideshow();
     initPageIndex();
     initSmoothScrolling();
@@ -13,7 +14,42 @@ document.addEventListener('DOMContentLoaded', function() {
     initAnimationObserver();
     initContactForm();
     initThemeElements();
+    initLanguageToggle();
 });
+
+/**
+ * Initializes the mobile hamburger menu functionality.
+ */
+function initMobileMenu() {
+    const hamburgerBtn = document.querySelector('.hamburger-menu');
+    const navPanel = document.querySelector('.header-nav-section');
+    const navLinks = document.querySelectorAll('#main-nav a');
+    const body = document.body;
+
+    if (!hamburgerBtn || !navPanel) return;
+
+    // Toggle menu on hamburger click
+    hamburgerBtn.addEventListener('click', () => {
+        const isActive = hamburgerBtn.classList.contains('is-active');
+        hamburgerBtn.classList.toggle('is-active', !isActive);
+        navPanel.classList.toggle('is-active', !isActive);
+        body.classList.toggle('mobile-menu-open', !isActive);
+        hamburgerBtn.setAttribute('aria-expanded', !isActive);
+    });
+
+    // Close menu when a nav link is clicked
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            if (hamburgerBtn.classList.contains('is-active')) {
+                hamburgerBtn.classList.remove('is-active');
+                navPanel.classList.remove('is-active');
+                body.classList.remove('mobile-menu-open');
+                hamburgerBtn.setAttribute('aria-expanded', 'false');
+            }
+        });
+    });
+}
+
 
 /**
  * Enhanced slideshow with better transitions and controls
@@ -180,15 +216,18 @@ function initPageIndex() {
  * Enhanced smooth scrolling for navigation
  */
 function initSmoothScrolling() {
-    document.querySelectorAll('#main-nav a[href^="#"]').forEach(anchor => {
+    // MODIFIED: Added .header-logo-link to the selector
+    document.querySelectorAll('#main-nav a[href^="#"], .header-logo-link').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
             e.preventDefault();
             
             const targetId = this.getAttribute('href').substring(1);
             const targetElement = document.getElementById(targetId);
-            const headerHeight = document.getElementById('main-header').offsetHeight;
             
             if (targetElement) {
+                // Use a smaller fixed offset for mobile, or calculate dynamically
+                const header = document.getElementById('main-header');
+                const headerHeight = header ? header.offsetHeight : 80;
                 const targetPosition = targetElement.offsetTop - headerHeight - 20;
                 
                 window.scrollTo({
@@ -199,6 +238,7 @@ function initSmoothScrolling() {
         });
     });
 }
+
 
 /**
  * Scroll-based effects for header and elements
@@ -517,87 +557,7 @@ function fallbackCopyTextToClipboard(text) {
     document.body.removeChild(textArea);
 }
 
-/**
- * Show notification when email is copied
- */
-function showEmailCopiedNotification() {
-    // Remove any existing notification
-    const existingNotification = document.querySelector('.email-copied-notification');
-    if (existingNotification) {
-        existingNotification.remove();
-    }
-    
-    // Create notification
-    const notification = document.createElement('div');
-    notification.className = 'email-copied-notification';
-    notification.style.cssText = `
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        background: var(--accent-color);
-        color: white;
-        padding: 1rem 1.5rem;
-        border-radius: 8px;
-        z-index: 10000;
-        font-size: 0.9rem;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-        animation: slideInEmailNotification 0.3s ease-out;
-    `;
-    notification.textContent = 'Email copied to clipboard!';
-    
-    document.body.appendChild(notification);
-    
-    // Auto remove after 3 seconds
-    setTimeout(() => {
-        notification.style.animation = 'slideOutEmailNotification 0.3s ease-out';
-        setTimeout(() => notification.remove(), 300);
-    }, 3000);
-    
-    // Add CSS animations if not already present
-    if (!document.querySelector('#email-notification-styles')) {
-        const style = document.createElement('style');
-        style.id = 'email-notification-styles';
-        style.textContent = `
-            @keyframes slideInEmailNotification {
-                from { 
-                    transform: translateX(100%); 
-                    opacity: 0; 
-                }
-                to { 
-                    transform: translateX(0); 
-                    opacity: 1; 
-                }
-            }
-            @keyframes slideOutEmailNotification {
-                from { 
-                    transform: translateX(0); 
-                    opacity: 1; 
-                }
-                to { 
-                    transform: translateX(100%); 
-                    opacity: 0; 
-                }
-            }
-        `;
-        document.head.appendChild(style);
-    }
-}
 
-// Add this to your existing DOMContentLoaded event listener
-document.addEventListener('DOMContentLoaded', function() {
-    // Your existing initializations...
-    initSlideshow();
-    initPageIndex();
-    initSmoothScrolling();
-    initScrollEffects();
-    initImageLazyLoading();
-    initAnimationObserver();
-    initContactForm();
-    initThemeElements();
-    
-    // Add this new initialization
-    initLanguageToggle();
-});
 
 /**
  * Language Toggle Functionality
