@@ -45,6 +45,12 @@ body {
     overflow-x: hidden;
 }
 
+/* Prevent scroll on body when mobile menu is open */
+body.mobile-menu-open {
+    overflow: hidden;
+}
+
+
 /* Enhanced Typography */
 h1, h2, h3 {
     font-weight: normal;
@@ -132,6 +138,13 @@ p {
     letter-spacing: 4px; /* Reduced from 6px */
     animation: fadeInDown 0.8s ease-out;
 }
+
+/* ADDED: Style for the new header logo link */
+.header-logo-link {
+    color: inherit;
+    text-decoration: none;
+}
+
 .header-nav-section {
     display: flex;
     align-items: center;
@@ -184,6 +197,72 @@ p {
     color: var(--accent-color);
     transform: translateY(-2px);
 }
+
+/* --- Hamburger Menu Styles --- */
+
+.hamburger-menu {
+    display: none; /* Hidden by default on desktop */
+    position: relative;
+    z-index: 1010; /* Above the nav panel */
+    background: none;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.hamburger-box {
+    width: 30px;
+    height: 24px;
+    display: inline-block;
+    position: relative;
+}
+
+.hamburger-inner {
+    display: block;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.hamburger-inner,
+.hamburger-inner::before,
+.hamburger-inner::after {
+    width: 30px;
+    height: 2px;
+    background-color: var(--text-primary);
+    border-radius: 4px;
+    position: absolute;
+    transition: transform 0.2s ease-in-out;
+}
+
+.hamburger-inner::before,
+.hamburger-inner::after {
+    content: '';
+    display: block;
+}
+
+.hamburger-inner::before {
+    top: -10px;
+}
+
+.hamburger-inner::after {
+    bottom: -10px;
+}
+
+/* Hamburger animation to 'X' */
+.hamburger-menu.is-active .hamburger-inner {
+    transform: rotate(45deg);
+}
+
+.hamburger-menu.is-active .hamburger-inner::before {
+    top: 0;
+    transform: rotate(90deg);
+}
+
+.hamburger-menu.is-active .hamburger-inner::after {
+    bottom: 0;
+    opacity: 0; /* Hides the bottom bar */
+}
+
 
 /* Enhanced Page Index */
 .page-index {
@@ -297,11 +376,28 @@ p {
 
 }
 
+/* Target the home container when it has the new layout class */
+.home-container.layout-side-by-side {
+    flex-direction: row; /* Arrange items horizontally */
+    align-items: center;    /* Vertically center the image and text block */
+    gap: 3rem;              /* Add space between the image and text */
+    justify-content: center;
+    flex-wrap: wrap;        /* Allow items to wrap on smaller screens */
+}
+
+/* Assign a flexible base width to the slideshow */
 .layout-side-by-side .slideshow-container {
-    flex: 1 1 500px;
+    flex: 1 1 500px; /* Allow it to grow and shrink, with a base width of 500px */
     max-width: 600px;
-    height: 450px;
-    margin: 0; /* Remove auto margin in side-by-side */
+    height: 450px;   /* Adjust height for a better aspect ratio in this layout */
+}
+
+/* Assign a flexible base width to the biography text block */
+.layout-side-by-side .home-bio {
+    flex: 1 1 400px; /* Allow it to grow and shrink, with a base width of 400px */
+    max-width: 500px;
+    text-align: left;/* Align text to the left for better readability */
+    margin: 0;       /* Reset the original margin */
 }
 
 .slide {
@@ -581,7 +677,7 @@ p {
     letter-spacing: 1px;
 }
 
-/* Add this new container rule */
+/* --- Footer --- */
 body > footer {
     position: relative;
     width: 100vw;
@@ -589,12 +685,23 @@ body > footer {
     right: 50%;
     margin-left: -50vw;
     margin-right: -50vw;
-    background: rgba(25,25, 25, 0.55);
-    backdrop-filter: blur(10px);
-    border-top: 0px solid var(--border-color);
-    padding: 1.3rem 0;
+    background: transparent;
+    border-top: 1px solid var(--border-color);
+    padding: 2rem 0;
     text-align: center;
+    margin-top: 3rem;
+
+    /* To remove the footer entirely, uncomment the line below */
+    /* display: none; */
 }
+
+footer p {
+    margin: 0;
+    color: var(--text-subtle);
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+}
+
 
 /* Inner content alignment */
 footer .footer-content {
@@ -893,104 +1000,106 @@ body.lang-pt [data-lang="pt"] {
 }
 
 /* Enhanced Responsive Design */
-@media (max-width: 768px) {
-    :root {
-        --side-padding: 15px;
-        --header-height: 90px;
-    }
 
-     .header-content {
-        transition: all 0.3s ease;
-        opacity: 1;
-        max-height: 5rem;
-        overflow: hidden;
-        margin-bottom: 0.5rem;
-    }
-    
-    #main-header.scrolled .header-content {
-        opacity: 0;
-        max-height: 0;
-        margin-bottom: 0;
-    }
-
-    #main-header {
+/* Large tablets and small desktops */
+@media (max-width: 1024px) {
+    .home-container.layout-side-by-side {
         flex-direction: column;
-        align-items: center;
+        gap: 2rem;
+        margin-top: 0; 
+    }
+
+    .layout-side-by-side .home-bio {
         text-align: center;
-        padding: 0.2rem var(--side-padding);
-        height: auto;
-        min-height: var(--header-height);
-        transition: all var(--transition-normal);
-        gap: 0.2rem; /* Smaller gap on mobile */
-
     }
 
-    #main-header.scrolled {
-        min-height: auto;
-        padding: 0.2rem var(--side-padding);
-    }
-
-    .header-content h1 {
-        font-size: 1.3rem;
-        letter-spacing: 2px;
-    }
-
-    .subtitle {
-        font-size: 0.9rem;
-        letter-spacing: 1px;
-    }
-
-
-    #main-nav {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-        width: 100%;
-        flex-wrap: nowrap; /* Prevent wrapping to keep them inline */
-
+    .project-main-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
     }
     
-    .header-nav-section {
-        display: flex;
-        align-items: center;
-        gap: 0.3rem; /* Slightly reduced gap on mobile */
-        width: 100%;
-        justify-content: center;
-        flex-wrap: nowrap;
+    /* --- Hamburger Menu Activation --- */
+    .hamburger-menu {
+        display: block; /* Show the hamburger */
     }
-    #main-nav ul {
-        display: flex;
-        flex-wrap: wrap;
+
+    .header-nav-section {
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: min(65vw, 320px); 
+        height: 100vh;
+        background: rgba(18, 18, 18, 0.85); 
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px); 
+        border-left: 1px solid var(--border-color); 
+        
+        flex-direction: column;
         justify-content: center;
-        gap: 0.3rem; /* Even smaller gaps on mobile */
-        margin: 0;
-        padding: 0;
+        align-items: center;
+        gap: 2rem;
+        z-index: 1005;
+        transform: translateX(100%); 
+        transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        padding: 2rem;
+    }
+
+    .header-nav-section.is-active {
+        transform: translateX(0); /* Slide in */
+    }
+
+    #main-nav ul {
+        flex-direction: column; /* Stack nav items vertically */
+        gap: 1.5rem;
+        text-align: center;
     }
 
     #main-nav li {
-        margin: 0 0.15rem 0.15rem; /* Small margin for better mobile spacing */
-        font-size: 0.7rem;
+        font-size: 1.2rem;
+    }
+}
+
+
+/* Tablets */
+@media (max-width: 768px) {
+    .about-container {
+        grid-template-columns: 1fr;
+        gap: 2rem;
     }
 
-    .language-toggle {
-        padding: 0.1rem 0.3rem;
-        height: fit-content;
-        flex-shrink: 0;
-        align-self: center;
+    .project-grid {
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 1.5rem;
+    }
+    
+    .project-item {
+        height: 280px;
     }
 
-    .lang-option {
-        padding: 0.1rem 0.3rem;
-        font-size: 0.7rem;
+    .slideshow-container {
+        height: 350px;
+    }
+}
+
+/* Mobile phones */
+@media (max-width: 480px) {
+    :root {
+        --side-padding: 15px;
+        --header-height: 80px; /* Reduced header height for mobile */
+    }
+    
+    #main-header {
+        height: var(--header-height);
+        padding: 0 var(--side-padding);
+    }
+    
+    .header-content h1 {
+        font-size: 1.3rem;
+        letter-spacing: 3px;
     }
 
-
-    .page-index {
-        display: none;
-    }
-
-    h1 {
-        font-size: 2rem;
+    .subtitle {
+        display: none; /* Hide subtitle on small screens for cleanliness */
     }
 
     .slideshow-container {
@@ -1001,16 +1110,33 @@ body.lang-pt [data-lang="pt"] {
         height: 250px;
     }
 
-    .about-container {
-        grid-template-columns: 1fr;
-        gap: 2rem;
+    .project-grid {
+        grid-template-columns: 1fr; /* Single column on smallest screens */
+        gap: 1.5rem;
+    }
+    
+    .project-item {
+        height: 280px;
+    }
+    
+    .project-title {
+        font-size: 0.9rem;
+        padding: 1.5rem 1rem 1rem;
+    }
+
+    .page-index {
+        display: none;
+    }
+
+    h1 {
+        font-size: 2rem;
     }
 
     .about-image {
-            max-height: 400px;
-        }
+        max-height: 400px;
+    }
 
-   .cv-grid {
+    .cv-grid {
         grid-template-columns: 1fr;
         gap: 1.5rem;
     }
@@ -1037,21 +1163,7 @@ body.lang-pt [data-lang="pt"] {
         padding: 0.8rem;
     }
 
-    .project-grid {
-        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-        gap: 1.5rem;
-    }
-    
-    .project-item {
-        height: 250px;
-    }
-    
-    .project-title {
-        font-size: 0.8rem;
-        padding: 1.5rem 0.8rem 0.8rem;
-    }
-
-     .project-main-content {
+    .project-main-content {
         gap: 1.5rem;
     }
     
@@ -1065,12 +1177,12 @@ body.lang-pt [data-lang="pt"] {
         margin: 3rem 0 2rem;
     }
 
-     .project-hero {
+    .project-hero {
         padding: 2rem 0 1.5rem;
     }
     
     .project-hero h1 {
-        font-size: 1.4rem; /* Reduced from 1.8rem */
+        font-size: 1.4rem;
         letter-spacing: 1.5px;
     }
     
@@ -1080,7 +1192,7 @@ body.lang-pt [data-lang="pt"] {
     }
     
     .project-meta span {
-        font-size: 0.75rem; /* Smaller on mobile */
+        font-size: 0.75rem;
     }
     
     .project-description p {
@@ -1095,22 +1207,11 @@ body.lang-pt [data-lang="pt"] {
         font-size: 0.9rem;
     }
     
-    .project-gallery {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-    }
-    
-    .project-details {
-        padding: 1.5rem;
-        margin: 2rem 0;
-    }
-    
     .back-to-projects {
         padding: 0.8rem 1.5rem;
         font-size: 0.85rem;
     }
     footer {
-        border-bottom: 0px solid var(--border-color) !important; /* Remove bottom border */
         padding: 1.5rem 0; /* Slightly less padding on mobile */
     }
     
