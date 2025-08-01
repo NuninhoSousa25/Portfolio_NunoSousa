@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initContactForm();
     initThemeElements();
     initLanguageToggle();
+    initFullscreenGallery();
 });
 
 /**
@@ -216,8 +217,8 @@ function initPageIndex() {
  * Enhanced smooth scrolling for navigation
  */
 function initSmoothScrolling() {
-    // MODIFIED: Added .header-logo-link to the selector
-    document.querySelectorAll('#main-nav a[href^="#"], .header-logo-link').forEach(anchor => {
+    // Handle navigation links that start with # (same page scrolling)
+    document.querySelectorAll('#main-nav a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
             e.preventDefault();
             
@@ -236,6 +237,35 @@ function initSmoothScrolling() {
                 });
             }
         });
+    });
+    
+    // Handle header logo link - let it navigate normally to other pages
+    document.querySelectorAll('.header-logo-link').forEach(link => {
+        // Check if the link goes to a different page (contains ../ or doesn't start with #)
+        const href = link.getAttribute('href');
+        if (href && !href.startsWith('#') && href.includes('../')) {
+            // Let it navigate normally - don't prevent default
+            return;
+        } else if (href && href.startsWith('#')) {
+            // Handle same-page scrolling
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = href.substring(1);
+                const targetElement = document.getElementById(targetId);
+                
+                if (targetElement) {
+                    const header = document.getElementById('main-header');
+                    const headerHeight = header ? header.offsetHeight : 80;
+                    const targetPosition = targetElement.offsetTop - headerHeight - 20;
+                    
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        }
     });
 }
 
@@ -664,5 +694,286 @@ function showEmailCopiedNotification() {
             }
         `;
         document.head.appendChild(style);
+    }
+}
+
+/**
+ * ==== FULLSCREEN GALLERY FUNCTIONALITY ====
+ * Reusable fullscreen gallery class for all project pages
+ */
+class FullscreenGallery {
+    constructor() {
+        this.media = [];
+        this.currentIndex = 0;
+        this.isOpen = false;
+        
+        // DOM elements (will be created if they don't exist)
+        this.overlay = null;
+        this.fullscreenImg = null;
+        this.fullscreenVideo = null;
+        this.fullscreenYoutube = null;
+        this.closeBtn = null;
+        this.prevBtn = null;
+        this.nextBtn = null;
+        this.counter = null;
+        
+        // Touch/swipe variables
+        this.touchStartX = 0;
+        this.touchStartY = 0;
+        this.touchEndX = 0;
+        this.touchEndY = 0;
+        this.minSwipeDistance = 50;
+    }
+    
+    init() {
+        // Create overlay HTML if it doesn't exist
+        this.createOverlayHTML();
+        
+        // Get DOM references
+        this.overlay = document.getElementById('fullscreen-gallery');
+        this.fullscreenImg = document.getElementById('fullscreen-img');
+        this.fullscreenVideo = document.getElementById('fullscreen-video');
+        this.fullscreenYoutube = document.getElementById('fullscreen-youtube');
+        this.closeBtn = document.getElementById('fullscreen-close');
+        this.prevBtn = document.getElementById('fullscreen-prev');
+        this.nextBtn = document.getElementById('fullscreen-next');
+        this.counter = document.getElementById('fullscreen-counter');
+        
+        // Collect all gallery media (images, videos, and YouTube)
+        this.collectMedia();
+        
+        // Add event listeners
+        this.addEventListeners();
+    }
+    
+    createOverlayHTML() {
+        // Check if overlay already exists
+        if (document.getElementById('fullscreen-gallery')) return;
+        
+        const overlayHTML = `
+            <div class="fullscreen-overlay" id="fullscreen-gallery">
+                <div class="fullscreen-content">
+                    <img src="" alt="" class="fullscreen-image" id="fullscreen-img" style="display: none;">
+                    <video class="fullscreen-video" id="fullscreen-video" controls style="display: none;">
+                        <source src="" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <iframe class="fullscreen-youtube" id="fullscreen-youtube" style="display: none;" allowfullscreen></iframe>
+                    <button class="fullscreen-close" id="fullscreen-close" aria-label="Close fullscreen">×</button>
+                    <button class="fullscreen-nav fullscreen-prev" id="fullscreen-prev" aria-label="Previous media">‹</button>
+                    <button class="fullscreen-nav fullscreen-next" id="fullscreen-next" aria-label="Next media">›</button>
+                    <div class="fullscreen-counter" id="fullscreen-counter">1 / 1</div>
+                </div>
+            </div>
+        `;
+        
+        document.body.insertAdjacentHTML('beforeend', overlayHTML);
+    }
+    
+    collectMedia() {
+        // Collect all gallery media (images, videos, and YouTube)
+        const galleryMedia = document.querySelectorAll('.gallery-clickable, .gallery-item img, .gallery-item video');
+        this.media = Array.from(galleryMedia).map(element => {
+            const tagName = element.tagName.toLowerCase();
+            const isVideo = tagName === 'video';
+            const isYoutube = element.getAttribute('data-media-type') === 'youtube' || 
+                             element.closest('[data-media-type="youtube"]');
+            
+            let type = 'image';
+            let src = element.src;
+            
+            if (isVideo) {
+                type = 'video';
+            } else if (isYoutube) {
+                type = 'youtube';
+                // For YouTube, get the iframe src from the sibling iframe
+                const iframe = element.parentElement.querySelector('iframe') || 
+                              element.closest('.gallery-item').querySelector('iframe');
+                src = iframe ? iframe.src : '';
+            }
+            
+            return {
+                src: src,
+                alt: element.alt || 'Media',
+                type: type,
+                element: element
+            };
+        });
+        
+        // Add click listeners to all collected media
+        this.media.forEach((mediaData, index) => {
+            mediaData.element.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.openGallery(index);
+            });
+            
+            // Add cursor pointer style
+            mediaData.element.style.cursor = 'pointer';
+        });
+    }
+    
+    addEventListeners() {
+        if (!this.overlay) return;
+        
+        // Control button listeners
+        this.closeBtn?.addEventListener('click', () => this.closeGallery());
+        this.prevBtn?.addEventListener('click', () => this.prevMedia());
+        this.nextBtn?.addEventListener('click', () => this.nextMedia());
+        
+        // Close on overlay click (but not on content click)
+        this.overlay.addEventListener('click', (e) => {
+            if (e.target === this.overlay) {
+                this.closeGallery();
+            }
+        });
+        
+        // Keyboard controls
+        document.addEventListener('keydown', (e) => {
+            if (!this.isOpen) return;
+            
+            switch(e.key) {
+                case 'Escape':
+                    this.closeGallery();
+                    break;
+                case 'ArrowLeft':
+                    this.prevMedia();
+                    break;
+                case 'ArrowRight':
+                    this.nextMedia();
+                    break;
+            }
+        });
+        
+        // Touch/swipe controls for mobile
+        this.overlay.addEventListener('touchstart', (e) => {
+            if (!this.isOpen) return;
+            this.touchStartX = e.changedTouches[0].screenX;
+            this.touchStartY = e.changedTouches[0].screenY;
+        }, { passive: true });
+        
+        this.overlay.addEventListener('touchend', (e) => {
+            if (!this.isOpen) return;
+            this.touchEndX = e.changedTouches[0].screenX;
+            this.touchEndY = e.changedTouches[0].screenY;
+            this.handleSwipe();
+        }, { passive: true });
+    }
+    
+    openGallery(index) {
+        this.currentIndex = index;
+        this.isOpen = true;
+        this.updateMedia();
+        this.overlay.classList.add('active');
+        document.body.style.overflow = 'hidden'; // Prevent scrolling
+    }
+    
+    closeGallery() {
+        this.isOpen = false;
+        this.overlay.classList.remove('active');
+        document.body.style.overflow = ''; // Restore scrolling
+        
+        // Pause any playing video
+        if (this.fullscreenVideo) {
+            this.fullscreenVideo.pause();
+        }
+        
+        // Stop YouTube video by removing src
+        if (this.fullscreenYoutube) {
+            this.fullscreenYoutube.src = '';
+        }
+    }
+    
+    prevMedia() {
+        this.currentIndex = (this.currentIndex - 1 + this.media.length) % this.media.length;
+        this.updateMedia();
+    }
+    
+    nextMedia() {
+        this.currentIndex = (this.currentIndex + 1) % this.media.length;
+        this.updateMedia();
+    }
+    
+    updateMedia() {
+        if (!this.media.length) return;
+        
+        const currentMedia = this.media[this.currentIndex];
+        
+        // Hide all elements first
+        if (this.fullscreenImg) this.fullscreenImg.style.display = 'none';
+        if (this.fullscreenVideo) this.fullscreenVideo.style.display = 'none';
+        if (this.fullscreenYoutube) this.fullscreenYoutube.style.display = 'none';
+        
+        // Pause any playing video and stop YouTube
+        if (this.fullscreenVideo) this.fullscreenVideo.pause();
+        if (this.fullscreenYoutube) this.fullscreenYoutube.src = '';
+        
+        if (currentMedia.type === 'video') {
+            // Show video
+            this.fullscreenVideo.style.display = 'block';
+            this.fullscreenVideo.src = currentMedia.src;
+            this.fullscreenVideo.load(); // Reload the video
+            
+            // Autoplay the video when it's ready
+            this.fullscreenVideo.addEventListener('loadeddata', () => {
+                this.fullscreenVideo.play().catch(error => {
+                    console.log('Autoplay prevented by browser:', error);
+                });
+            }, { once: true });
+        } else if (currentMedia.type === 'youtube') {
+            // Show YouTube video
+            this.fullscreenYoutube.style.display = 'block';
+            this.fullscreenYoutube.src = FullscreenGallery.getYouTubeEmbedUrl(currentMedia.src);
+        } else {
+            // Show image
+            this.fullscreenImg.style.display = 'block';
+            this.fullscreenImg.src = currentMedia.src;
+            this.fullscreenImg.alt = currentMedia.alt;
+        }
+        
+        // Update counter
+        if (this.counter) {
+            this.counter.textContent = `${this.currentIndex + 1} / ${this.media.length}`;
+        }
+        
+        // Update navigation button visibility
+        if (this.prevBtn) this.prevBtn.style.display = this.media.length > 1 ? 'flex' : 'none';
+        if (this.nextBtn) this.nextBtn.style.display = this.media.length > 1 ? 'flex' : 'none';
+    }
+    
+    handleSwipe() {
+        const deltaX = this.touchEndX - this.touchStartX;
+        const deltaY = this.touchEndY - this.touchStartY;
+        
+        // Check if it's a horizontal swipe (not vertical scroll)
+        if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > this.minSwipeDistance) {
+            if (deltaX > 0) {
+                // Swiped right - go to previous media
+                this.prevMedia();
+            } else {
+                // Swiped left - go to next media
+                this.nextMedia();
+            }
+        }
+    }
+    
+    // Helper function to convert YouTube URL to embed URL
+    static getYouTubeEmbedUrl(url) {
+        const videoIdMatch = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\n?#]+)/);
+        if (videoIdMatch) {
+            return `https://www.youtube.com/embed/${videoIdMatch[1]}?autoplay=1&rel=0`;
+        }
+        return url;
+    }
+}
+
+/**
+ * Initialize fullscreen gallery functionality
+ */
+function initFullscreenGallery() {
+    // Only initialize if there are gallery items on the page
+    const galleryItems = document.querySelectorAll('.gallery-item img, .gallery-item video, .gallery-clickable');
+    if (galleryItems.length > 0) {
+        const gallery = new FullscreenGallery();
+        gallery.init();
     }
 }
