@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WIP Media Test - Nuno Sousa</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <style>
+        /* Fullscreen Gallery Styles */
+        .fullscreen-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 9999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .fullscreen-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .fullscreen-content {
+            position: relative;
+            max-width: 95vw;
+            max-height: 95vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .fullscreen-image, .fullscreen-video {
+            max-width: 90vw;
+            max-height: 90vh;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease;
+        }
+
+        .fullscreen-video {
+            background: #000;
+        }
+
+        .fullscreen-video::-webkit-media-controls-panel {
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .fullscreen-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+            opacity: 0.6;
+        }
+
+        .fullscreen-close:hover {
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            opacity: 1;
+            transform: scale(1.05);
+        }
+
+        .fullscreen-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+            opacity: 0.5;
+        }
+
+        .fullscreen-nav:hover {
+            background: rgba(0, 0, 0, 0.4);
+            color: white;
+            opacity: 1;
+            transform: translateY(-50%) scale(1.05);
+        }
+
+        .fullscreen-prev {
+            left: 30px;
+        }
+
+        .fullscreen-next {
+            right: 30px;
+        }
+
+        .fullscreen-counter {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255, 255, 255, 0.8);
+            background: rgba(0, 0, 0, 0.3);
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            backdrop-filter: blur(5px);
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+
+        .fullscreen-counter:hover {
+            opacity: 1;
+        }
+
+        /* Gallery hover effects */
+        .gallery-item {
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+        }
+
+        .gallery-item img {
+            transition: all 0.3s ease;
+        }
+
+        .gallery-item:hover img {
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Custom gallery layout for media test page */
+        .project-gallery {
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)) !important;
+            gap: 1rem !important;
+            margin: 3rem 0 2rem !important;
+        }
+
+        .gallery-item img, .gallery-item video {
+            width: 100%;
+            height: 350px !important;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        .gallery-item video {
+            background: #000;
+        }
+
+        /* Video overlay indicator */
+        .gallery-item {
+            position: relative;
+        }
+
+        .gallery-item[data-media-type="video"]::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .gallery-item[data-media-type="video"]::before {
+            content: '▶';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-45%, -50%);
+            color: white;
+            font-size: 20px;
+            z-index: 2;
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+
+        .gallery-item[data-media-type="video"]:hover::after {
+            background: rgba(0, 0, 0, 0.8);
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+
+        .gallery-item[data-media-type="video"]:hover::before {
+            transform: translate(-45%, -50%) scale(1.1);
+        }
+
+        /* Mobile responsive adjustments */
+        @media (max-width: 768px) {
+            .project-gallery {
+                grid-template-columns: 1fr !important;
+                gap: 1rem !important;
+            }
+            
+            .gallery-item img, .gallery-item video {
+                height: 300px !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .project-gallery {
+                grid-template-columns: 1fr !important;
+                gap: 0.8rem !important;
+            }
+            
+            .gallery-item img, .gallery-item video {
+                height: 250px !important;
+            }
+            
+            .fullscreen-image, .fullscreen-video {
+                max-width: 95vw;
+                max-height: 85vh;
+            }
+            
+            .fullscreen-close {
+                top: 10px;
+                right: 10px;
+                width: 35px;
+                height: 35px;
+                font-size: 16px;
+            }
+            
+            .fullscreen-nav {
+                width: 45px;
+                height: 45px;
+                font-size: 18px;
+            }
+            
+            .fullscreen-prev {
+                left: 15px;
+            }
+            
+            .fullscreen-next {
+                right: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- === CONSISTENT HEADER === -->
+    <header id="main-header"> 
+        <div class="header-content"> 
+            <h1><a href="../index.html#home" class="header-logo-link">NUNO SOUSA</a></h1>
+            <p class="subtitle"> Artist ✷ Teacher ✷ Researcher</p>
+        </div>
+        
+        <button class="hamburger-menu" aria-label="Toggle menu" aria-expanded="false" aria-controls="header-nav-section">
+            <span class="hamburger-box">
+                <span class="hamburger-inner"></span>
+            </span>
+        </button>
+        
+        <div class="header-nav-section" id="header-nav-section">
+            <nav id="main-nav">
+                <ul>
+                    <li><a href="../index.html#home" data-lang="en">Home</a></li>
+                    <li><a href="../index.html#home" data-lang="pt">Início</a></li>
+                    <li><a href="../index.html#projects" data-lang="en">Projects</a></li>
+                    <li><a href="../index.html#projects" data-lang="pt">Projetos</a></li>
+                    <li><a href="../index.html#products" data-lang="en">Products</a></li>
+                    <li><a href="../index.html#products" data-lang="pt">Produtos</a></li>
+                    <li><a href="../index.html#about" data-lang="en">About</a></li>
+                    <li><a href="../index.html#about" data-lang="pt">Sobre</a></li>
+                    <li><a href="../index.html#contact" data-lang="en">Contact</a></li>
+                    <li><a href="../index.html#contact" data-lang="pt">Contato</a></li>
+                </ul>
+            </nav>
+            
+            <div class="language-toggle">
+                <span class="lang-option active" data-lang-switch="en">EN</span>
+                <span class="lang-option" data-lang-switch="pt">PT</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="project-page">
+        <!-- Project Title Section -->
+        <section class="project-hero">
+            <h1 data-lang="en">WIP Media Test</h1>
+            <h1 data-lang="pt">WIP Media Test</h1>
+            <div class="project-meta">
+                <span class="year">2025</span>
+                <span class="category" data-lang="en">Experimental Gallery</span>
+                <span class="category" data-lang="pt">Galeria Experimental</span>
+            </div>
+        </section>
+
+        <!-- Main Content Area -->
+        <section class="project-content">
+            <div class="project-main-content">
+                <!-- Left Side - Featured Image -->
+                <div class="project-featured-image">
+                    <img src="../images/projects/digital-debris/your-image-name.jpg" alt="WIP Media Test - Main Image" class="gallery-clickable" data-gallery-index="0">
+                </div>
+
+                <!-- Right Side - Text Content -->
+                <div class="project-text-content">
+                    <div class="project-description">
+                        <p data-lang="en">This is a work-in-progress media test project designed to experiment with interactive gallery features. Click on any image to view it in fullscreen mode with navigation controls.</p>
+                        <p data-lang="pt">Este é um projeto de teste de mídia em desenvolvimento, projetado para experimentar recursos de galeria interativa. Clique em qualquer imagem para visualizá-la em tela cheia com controles de navegação.</p>
+                    </div>
+
+                    <div class="project-details">
+                        <h2 data-lang="en">Project Details</h2>
+                        <h2 data-lang="pt">Detalhes do Projeto</h2>
+                        <ul>
+                            <li><strong data-lang="en">Software Used:</strong><strong data-lang="pt">Software Utilizado:</strong> JavaScript, CSS3, HTML5</li>
+                            <li><strong data-lang="en">Techniques:</strong><strong data-lang="pt">Técnicas:</strong> Interactive Gallery, Fullscreen Display, CSS Animations</li>
+                            <li><strong data-lang="en">Purpose:</strong><strong data-lang="pt">Propósito:</strong> Testing fullscreen image gallery functionality</li>
+                            <li><strong data-lang="en">Status:</strong><strong data-lang="pt">Status:</strong> Work in Progress</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Additional Gallery Section -->
+            <div class="project-gallery">
+                <h3 data-lang="en">Gallery</h3>
+                <h3 data-lang="pt">Galeria</h3>
+                <div class="gallery-item">
+                    <img src="../images/projects/digital-debris/placeholder-image-1.jpg" alt="WIP Media Test - Gallery Image 1" class="gallery-clickable" data-gallery-index="1">
+                </div>
+                <div class="gallery-item">
+                    <img src="../images/projects/digital-debris/placeholder-image-2.jpg" alt="WIP Media Test - Gallery Image 2" class="gallery-clickable" data-gallery-index="2">
+                </div>
+                <div class="gallery-item">
+                    <img src="../images/projects/digital-debris/placeholder-image-3.webp" alt="WIP Media Test - Gallery Image 3" class="gallery-clickable" data-gallery-index="3">
+                </div>
+                <div class="gallery-item">
+                    <img src="../images/projects/digital-debris/placeholder-image-4.webp" alt="WIP Media Test - Gallery Image 4" class="gallery-clickable" data-gallery-index="4">
+                </div>
+                <div class="gallery-item">
+                    <img src="../images/projects/digital-debris/placeholder-image-5.webp" alt="WIP Media Test - Gallery Image 5" class="gallery-clickable" data-gallery-index="5">
+                </div>
+                <div class="gallery-item" data-media-type="video">
+                    <video src="../images/1.mp4" alt="WIP Media Test - Video 1" class="gallery-clickable" data-gallery-index="6" data-media-type="video" muted loop>
+                        <source src="../images/1.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+            </div>
+
+            <!-- Optional: Process/Behind the Scenes Section -->
+            <div class="project-process">
+                <h3 data-lang="en">Features & Development</h3>
+                <h3 data-lang="pt">Recursos & Desenvolvimento</h3>
+                <p data-lang="en">This experimental gallery includes fullscreen viewing, navigation controls, keyboard shortcuts (arrow keys and escape), and smooth animations. The gallery is optimized for both desktop and mobile viewing experiences.</p>
+                <p data-lang="pt">Esta galeria experimental inclui visualização em tela cheia, controles de navegação, atalhos de teclado (setas e escape), e animações suaves. A galeria é otimizada para experiências de visualização tanto em desktop quanto em dispositivos móveis.</p>
+            </div>
+        </section>
+
+        <!-- Navigation -->
+        <div class="project-navigation">
+            <a href="../index.html#projects" class="back-to-projects">
+                <span class="nav-icon">←</span>
+                <span data-lang="en">Back to Projects</span>
+                <span data-lang="pt">Voltar aos Projetos</span>
+            </a>
+        </div>
+    </main>
+
+    <!-- Fullscreen Gallery Overlay -->
+    <div class="fullscreen-overlay" id="fullscreen-gallery">
+        <div class="fullscreen-content">
+            <img src="" alt="" class="fullscreen-image" id="fullscreen-img" style="display: none;">
+            <video class="fullscreen-video" id="fullscreen-video" controls style="display: none;">
+                <source src="" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <button class="fullscreen-close" id="fullscreen-close" aria-label="Close fullscreen">×</button>
+            <button class="fullscreen-nav fullscreen-prev" id="fullscreen-prev" aria-label="Previous media">‹</button>
+            <button class="fullscreen-nav fullscreen-next" id="fullscreen-next" aria-label="Next media">›</button>
+            <div class="fullscreen-counter" id="fullscreen-counter">1 / 7</div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Nuno Sousa. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+    <script>
+        // Fullscreen Gallery Functionality
+        class FullscreenGallery {
+            constructor() {
+                this.media = [];
+                this.currentIndex = 0;
+                this.isOpen = false;
+                
+                this.overlay = document.getElementById('fullscreen-gallery');
+                this.fullscreenImg = document.getElementById('fullscreen-img');
+                this.fullscreenVideo = document.getElementById('fullscreen-video');
+                this.closeBtn = document.getElementById('fullscreen-close');
+                this.prevBtn = document.getElementById('fullscreen-prev');
+                this.nextBtn = document.getElementById('fullscreen-next');
+                this.counter = document.getElementById('fullscreen-counter');
+                
+                // Touch/swipe variables
+                this.touchStartX = 0;
+                this.touchStartY = 0;
+                this.touchEndX = 0;
+                this.touchEndY = 0;
+                this.minSwipeDistance = 50;
+                
+                this.init();
+            }
+            
+            init() {
+                // Collect all gallery media (images and videos)
+                const galleryMedia = document.querySelectorAll('.gallery-clickable');
+                this.media = Array.from(galleryMedia).map(element => {
+                    const isVideo = element.tagName.toLowerCase() === 'video';
+                    return {
+                        src: element.src,
+                        alt: element.alt,
+                        type: isVideo ? 'video' : 'image'
+                    };
+                });
+                
+                // Add click listeners to gallery media
+                galleryMedia.forEach((element, index) => {
+                    element.addEventListener('click', () => this.openGallery(index));
+                });
+                
+                // Add control listeners
+                this.closeBtn.addEventListener('click', () => this.closeGallery());
+                this.prevBtn.addEventListener('click', () => this.prevMedia());
+                this.nextBtn.addEventListener('click', () => this.nextMedia());
+                
+                // Close on overlay click (but not on image click)
+                this.overlay.addEventListener('click', (e) => {
+                    if (e.target === this.overlay) {
+                        this.closeGallery();
+                    }
+                });
+                
+                // Keyboard controls
+                document.addEventListener('keydown', (e) => {
+                    if (!this.isOpen) return;
+                    
+                    switch(e.key) {
+                        case 'Escape':
+                            this.closeGallery();
+                            break;
+                        case 'ArrowLeft':
+                            this.prevMedia();
+                            break;
+                        case 'ArrowRight':
+                            this.nextMedia();
+                            break;
+                    }
+                });
+                
+                // Touch/swipe controls for mobile
+                this.overlay.addEventListener('touchstart', (e) => {
+                    if (!this.isOpen) return;
+                    this.touchStartX = e.changedTouches[0].screenX;
+                    this.touchStartY = e.changedTouches[0].screenY;
+                }, { passive: true });
+                
+                this.overlay.addEventListener('touchend', (e) => {
+                    if (!this.isOpen) return;
+                    this.touchEndX = e.changedTouches[0].screenX;
+                    this.touchEndY = e.changedTouches[0].screenY;
+                    this.handleSwipe();
+                }, { passive: true });
+            }
+            
+            openGallery(index) {
+                this.currentIndex = index;
+                this.isOpen = true;
+                this.updateMedia();
+                this.overlay.classList.add('active');
+                document.body.style.overflow = 'hidden'; // Prevent scrolling
+            }
+            
+            closeGallery() {
+                this.isOpen = false;
+                this.overlay.classList.remove('active');
+                document.body.style.overflow = ''; // Restore scrolling
+                
+                // Pause any playing video
+                this.fullscreenVideo.pause();
+            }
+            
+            prevMedia() {
+                this.currentIndex = (this.currentIndex - 1 + this.media.length) % this.media.length;
+                this.updateMedia();
+            }
+            
+            nextMedia() {
+                this.currentIndex = (this.currentIndex + 1) % this.media.length;
+                this.updateMedia();
+            }
+            
+            updateMedia() {
+                const currentMedia = this.media[this.currentIndex];
+                
+                // Hide both elements first
+                this.fullscreenImg.style.display = 'none';
+                this.fullscreenVideo.style.display = 'none';
+                
+                // Pause any playing video
+                this.fullscreenVideo.pause();
+                
+                if (currentMedia.type === 'video') {
+                    // Show video
+                    this.fullscreenVideo.style.display = 'block';
+                    this.fullscreenVideo.src = currentMedia.src;
+                    this.fullscreenVideo.load(); // Reload the video
+                    
+                    // Autoplay the video when it's ready
+                    this.fullscreenVideo.addEventListener('loadeddata', () => {
+                        this.fullscreenVideo.play().catch(error => {
+                            console.log('Autoplay prevented by browser:', error);
+                        });
+                    }, { once: true });
+                } else {
+                    // Show image
+                    this.fullscreenImg.style.display = 'block';
+                    this.fullscreenImg.src = currentMedia.src;
+                    this.fullscreenImg.alt = currentMedia.alt;
+                }
+                
+                this.counter.textContent = `${this.currentIndex + 1} / ${this.media.length}`;
+                
+                // Update navigation button visibility
+                this.prevBtn.style.display = this.media.length > 1 ? 'flex' : 'none';
+                this.nextBtn.style.display = this.media.length > 1 ? 'flex' : 'none';
+            }
+            
+            handleSwipe() {
+                const deltaX = this.touchEndX - this.touchStartX;
+                const deltaY = this.touchEndY - this.touchStartY;
+                
+                // Check if it's a horizontal swipe (not vertical scroll)
+                if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > this.minSwipeDistance) {
+                    if (deltaX > 0) {
+                        // Swiped right - go to previous media
+                        this.prevMedia();
+                    } else {
+                        // Swiped left - go to next media
+                        this.nextMedia();
+                    }
+                }
+            }
+        }
+        
+        // Initialize gallery when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            new FullscreenGallery();
+        });
+    </script>
+</body>
+</html>
