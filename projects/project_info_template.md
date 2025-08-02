@@ -60,18 +60,35 @@ Use this template to gather all the information needed to create individual proj
 ### Main Featured Image
 - **Filename:** [e.g., "main-image.jpg"]
 - **Description:** [Brief description of what the image shows]
+- **Recommended Size:** Landscape orientation preferred for best layout
 
-### Gallery Images (2-4 additional images)
-1. **Filename:** [e.g., "detail-1.jpg"]
-   **Description:** [What this image shows]
+### Gallery Layout Choice
+**Choose one of the following gallery layouts:**
 
-2. **Filename:** [e.g., "installation-view.jpg"]
-   **Description:** [What this image shows]
+#### Option A: Standard Grid Gallery (2-4 images)
+- Best for: Similar sized images, consistent presentation
+- **Gallery Images:**
+  1. **Filename:** [e.g., "gallery-1.jpg"]
+     **Description:** [What this image shows]
+  2. **Filename:** [e.g., "gallery-2.jpg"]
+     **Description:** [What this image shows]
 
-3. **Filename:** [e.g., "process-image.jpg"]
-   **Description:** [What this image shows]
+#### Option B: Masonry Gallery (4-8+ images)
+- Best for: Various sized images, more dynamic presentation
+- **Gallery Images:**
+  1. **Filename:** [e.g., "gallery-1.jpg"]  
+     **Description:** [What this image shows]
+  2. **Filename:** [e.g., "gallery-2.jpg"]
+     **Description:** [What this image shows]
+  3. **Filename:** [e.g., "gallery-3.jpg"]
+     **Description:** [What this image shows]
+  4. **Filename:** [e.g., "gallery-4.jpg"]
+     **Description:** [What this image shows]
+  [Add more as needed - masonry works best with 5+ images]
 
-[Add more as needed]
+### Video Content (Optional)
+- **Filename:** [e.g., "video.mp4"]
+- **Description:** [Brief description of video content]
 
 ## Optional Sections
 
@@ -116,5 +133,27 @@ A video installation exploring the concept of digital memory and the fragments o
 - **Gallery Images:** detail-screen.jpg, audience-view.jpg
 
 ---
+
+## Quick Reference Checklist
+
+**Before creating the HTML file, ensure you have:**
+- [ ] All text content in both English and Portuguese
+- [ ] Main featured image (landscape preferred)
+- [ ] 2-8 gallery images (depending on layout choice)
+- [ ] Video file (if applicable)
+- [ ] Images properly named and organized in `/images/projects/[project-folder]/`
+- [ ] Updated imageConfig.js with new project images
+- [ ] Chosen between standard grid or masonry gallery layout
+
+**File Structure:**
+```
+images/projects/[project-folder-name]/
+├── main-image.jpg (featured image)
+├── gallery-1.jpg
+├── gallery-2.jpg
+├── gallery-3.jpg (if using masonry)
+├── gallery-4.jpg (if using masonry)
+└── video.mp4 (optional)
+```
 
 **Note:** Save each completed template as "[project-name]-info.md" for easy reference when creating the HTML files.

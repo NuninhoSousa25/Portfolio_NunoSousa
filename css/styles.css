@@ -954,6 +954,139 @@ footer .footer-content {
     margin-bottom: 1rem;
 }
 
+/* ===================================== */
+/* ======== MASONRY GALLERY =========== */
+/* ===================================== */
+
+/* Masonry Gallery Layout */
+.project-gallery.masonry {
+    display: block; /* Override grid for masonry */
+    columns: 3;
+    column-gap: 0.8rem;
+    margin: 3rem 0 2rem;
+}
+
+.project-gallery.masonry h3 {
+    column-span: all; /* Make title span all columns */
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.project-gallery.masonry .gallery-item {
+    break-inside: avoid;
+    margin-bottom: 0.8rem;
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    border: 1px solid var(--border-color);
+    display: block; /* Ensure proper masonry behavior */
+}
+
+.project-gallery.masonry .gallery-item:hover {
+    transform: scale(1.02);
+    border-color: var(--accent-color);
+    box-shadow: 0 10px 25px rgba(255, 87, 34, 0.2);
+}
+
+.project-gallery.masonry .gallery-item img,
+.project-gallery.masonry .gallery-item video {
+    width: 100%;
+    height: auto; /* Important for masonry - maintain aspect ratio */
+    display: block;
+    transition: all var(--transition-slow);
+}
+
+.project-gallery.masonry .gallery-item:hover img,
+.project-gallery.masonry .gallery-item:hover video {
+    transform: scale(1.03);
+}
+
+.project-gallery.masonry .gallery-item iframe {
+    width: 100%;
+    height: 250px; /* Fixed height for YouTube videos in masonry */
+    border: none;
+}
+
+/* Media overlay for masonry items */
+.project-gallery.masonry .gallery-item .media-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+    padding: 1.5rem 1rem 1rem;
+    transform: translateY(100%);
+    transition: transform var(--transition-normal);
+}
+
+.project-gallery.masonry .gallery-item:hover .media-overlay {
+    transform: translateY(0);
+}
+
+.project-gallery.masonry .media-title {
+    color: var(--text-primary);
+    font-size: 1rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+    margin-bottom: 0.3rem;
+}
+
+.project-gallery.masonry .media-description {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    line-height: 1.4;
+}
+
+/* Video play button overlay for masonry */
+.project-gallery.masonry .gallery-item[data-media-type="video"]::after,
+.project-gallery.masonry .gallery-item[data-media-type="youtube"]::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60px;
+    height: 60px;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+    z-index: 2;
+}
+
+.project-gallery.masonry .gallery-item[data-media-type="video"]::before,
+.project-gallery.masonry .gallery-item[data-media-type="youtube"]::before {
+    content: '▶';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-45%, -50%);
+    color: white;
+    font-size: 20px;
+    z-index: 3;
+    pointer-events: none;
+    transition: all 0.3s ease;
+}
+
+.project-gallery.masonry .gallery-item[data-media-type="video"]:hover::after,
+.project-gallery.masonry .gallery-item[data-media-type="youtube"]:hover::after {
+    background: rgba(0, 0, 0, 0.8);
+    transform: translate(-50%, -50%) scale(1.1);
+}
+
+.project-gallery.masonry .gallery-item[data-media-type="video"]:hover::before,
+.project-gallery.masonry .gallery-item[data-media-type="youtube"]:hover::before {
+    transform: translate(-45%, -50%) scale(1.1);
+}
+
+
+
 
 /* ===================================== */
 /* ======= FULLSCREEN GALLERY ========= */
@@ -1558,6 +1691,16 @@ body.lang-pt [data-lang="pt"] {
     .slideshow-container {
         height: 350px;
     }
+    
+    /* Masonry responsive - 2 columns on tablets */
+    .project-gallery.masonry {
+        columns: 2;
+        column-gap: 0.6rem;
+    }
+    
+    .project-gallery.masonry .gallery-item {
+        margin-bottom: 0.6rem;
+    }
 }
 
 /* Mobile phones */
@@ -1702,6 +1845,16 @@ body.lang-pt [data-lang="pt"] {
         right: 50%;
         margin-left: -50vw;
         margin-right: -50vw;
+    }
+    
+    /* Masonry responsive - 2 columns on small mobile */
+    .project-gallery.masonry {
+        columns: 2;
+        column-gap: 0.5rem;
+    }
+    
+    .project-gallery.masonry .gallery-item {
+        margin-bottom: 0.5rem;
     }
 
   

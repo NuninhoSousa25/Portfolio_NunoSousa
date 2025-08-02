@@ -1,3 +1,19 @@
+/**
+ * Image Configuration for Nuno Sousa Portfolio
+ * 
+ * This file centralizes all image paths and alt text for the portfolio.
+ * 
+ * To add a new project:
+ * 1. Create a new folder in images/projects/ with project name (lowercase-with-hyphens)
+ * 2. Add project configuration in the 'projects' section below
+ * 3. Use the template at the bottom of this file as a guide
+ * 
+ * Image naming conventions:
+ * - main-image.jpg (or .webp/.png) for the featured image
+ * - gallery-1.jpg, gallery-2.jpg, etc. for additional images
+ * - video.mp4 for video content (optional)
+ */
+
 const ImageConfig = {
     slideshow: {
         image1: {
@@ -173,7 +189,38 @@ const ImageConfig = {
                 src: 'images/projects/image (4).webp',
                 alt: 'Project Image 4'
             }
-        }
+        },
+        
+        // ===== TEMPLATE FOR NEW PROJECTS =====
+        // Copy and modify this template for each new project:
+        /*
+        newProjectName: {
+            main: {
+                src: 'images/projects/project-folder-name/main-image.jpg',
+                alt: 'Project Title - Main Image'
+            },
+            gallery: [
+                {
+                    src: 'images/projects/project-folder-name/gallery-1.jpg',
+                    alt: 'Project Title - Gallery Image 1'
+                },
+                {
+                    src: 'images/projects/project-folder-name/gallery-2.jpg',
+                    alt: 'Project Title - Gallery Image 2'
+                },
+                {
+                    src: 'images/projects/project-folder-name/gallery-3.jpg',
+                    alt: 'Project Title - Gallery Image 3'
+                }
+                // Add more gallery images as needed
+            ],
+            // Optional: Add video if project has video content
+            video: {
+                src: 'images/projects/project-folder-name/video.mp4',
+                alt: 'Project Title - Process Video'
+            }
+        },
+        */
     }
 };
 
