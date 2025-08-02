@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery Showcase - Nuno Sousa</title>
+    <style>
+        :root {
+            --primary-bg: #121212;
+            --secondary-bg: #1a1a1a;
+            --accent-color: #ff5722;
+            --accent-hover: #ff9800;
+            --text-primary: #ffffff;
+            --text-secondary: #f0f0f0;
+            --text-muted: #cccccc;
+            --text-subtle: #999999;
+            --border-color: #333333;
+            --border-hover: #555555;
+            --transition-fast: 0.2s ease;
+            --transition-normal: 0.3s ease;
+            --transition-slow: 0.5s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(135deg, var(--primary-bg) 0%, #0d0d0d 100%);
+            color: var(--text-secondary);
+            line-height: 1.6;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--text-primary);
+            font-size: 2.5rem;
+            letter-spacing: 4px;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            letter-spacing: 2px;
+            margin-bottom: 3rem;
+        }
+
+        .gallery-section {
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            color: var(--accent-color);
+            font-size: 1.5rem;
+            letter-spacing: 3px;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 60px;
+            height: 2px;
+            background: var(--accent-color);
+        }
+
+        /* Grid Gallery Format */
+        .grid-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .grid-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            aspect-ratio: 16/9;
+            cursor: pointer;
+            transition: all var(--transition-normal);
+            border: 1px solid var(--border-color);
+        }
+
+        .grid-item:hover {
+            transform: translateY(-5px) scale(1.02);
+            border-color: var(--accent-color);
+            box-shadow: 0 15px 30px rgba(255, 87, 34, 0.3);
+        }
+
+        .grid-item img, .grid-item video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all var(--transition-slow);
+        }
+
+        .grid-item:hover img, .grid-item:hover video {
+            transform: scale(1.05);
+        }
+
+        /* Masonry Gallery Format */
+        .masonry-gallery {
+            columns: 3;
+            column-gap: 1.5rem;
+        }
+
+        .masonry-item {
+            break-inside: avoid;
+            margin-bottom: 1.5rem;
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all var(--transition-normal);
+            border: 1px solid var(--border-color);
+        }
+
+        .masonry-item:hover {
+            transform: scale(1.02);
+            border-color: var(--accent-color);
+            box-shadow: 0 10px 25px rgba(255, 87, 34, 0.2);
+        }
+
+        .masonry-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: all var(--transition-slow);
+        }
+
+        .masonry-item:hover img {
+            transform: scale(1.03);
+        }
+
+
+        /* Featured Gallery Format */
+        .featured-gallery {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 1rem;
+            height: 500px;
+        }
+
+        .featured-main {
+            grid-row: 1 / -1;
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all var(--transition-normal);
+            border: 1px solid var(--border-color);
+        }
+
+        .featured-main:hover {
+            transform: scale(1.01);
+            border-color: var(--accent-color);
+            box-shadow: 0 20px 40px rgba(255, 87, 34, 0.3);
+        }
+
+        .featured-side {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all var(--transition-normal);
+            border: 1px solid var(--border-color);
+        }
+
+        .featured-side:hover {
+            transform: scale(1.02);
+            border-color: var(--accent-color);
+            box-shadow: 0 10px 20px rgba(255, 87, 34, 0.2);
+        }
+
+        .featured-main img, .featured-main video,
+        .featured-side img, .featured-side video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all var(--transition-slow);
+        }
+
+        .featured-main:hover img, .featured-main:hover video,
+        .featured-side:hover img, .featured-side:hover video {
+            transform: scale(1.05);
+        }
+
+        /* Media Overlay Info */
+        .media-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+            padding: 1.5rem 1rem 1rem;
+            transform: translateY(100%);
+            transition: transform var(--transition-normal);
+        }
+
+        .grid-item:hover .media-overlay,
+        .masonry-item:hover .media-overlay,
+        .featured-main:hover .media-overlay,
+        .featured-side:hover .media-overlay {
+            transform: translateY(0);
+        }
+
+        .media-title {
+            color: var(--text-primary);
+            font-size: 1rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+            margin-bottom: 0.3rem;
+        }
+
+        .media-description {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            line-height: 1.4;
+        }
+
+        /* Fullscreen Modal */
+        .fullscreen-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .fullscreen-modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            max-width: 90vw;
+            max-height: 90vh;
+            position: relative;
+        }
+
+        .modal-content img, .modal-content video {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: -50px;
+            right: 0;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            padding: 10px;
+            transition: color var(--transition-fast);
+        }
+
+        .modal-close:hover {
+            color: var(--accent-color);
+        }
+
+        /* Navigation */
+        .back-nav {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            transition: all var(--transition-fast);
+            z-index: 100;
+        }
+
+        .back-nav:hover {
+            background: var(--accent-color);
+            transform: scale(1.05);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .masonry-gallery {
+                columns: 2;
+            }
+            
+            .featured-gallery {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto auto auto;
+                height: auto;
+            }
+            
+            .featured-main {
+                grid-row: auto;
+                height: 300px;
+            }
+            
+            .featured-side {
+                height: 200px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 1rem;
+            }
+            
+            .masonry-gallery {
+                columns: 1;
+            }
+            
+            .grid-gallery {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="../index.html" class="back-nav">← Back to Home</a>
+    
+    <div class="container">
+        <h1>Gallery Showcase</h1>
+        <p class="subtitle">Different Media Presentation Formats</p>
+
+        <!-- Grid Gallery -->
+        <div class="gallery-section">
+            <h2 class="section-title">Grid Gallery</h2>
+            <div class="grid-gallery">
+                <div class="grid-item" data-src="../images/projects/digital-debris/placeholder-image-1.jpg">
+                    <img src="../images/projects/digital-debris/placeholder-image-1.jpg" alt="Digital Art 1">
+                    <div class="media-overlay">
+                        <div class="media-title">Digital Composition</div>
+                        <div class="media-description">Abstract digital artwork exploring form and texture</div>
+                    </div>
+                </div>
+                <div class="grid-item" data-src="../images/projects/digital-debris/placeholder-image-2.jpg">
+                    <img src="../images/projects/digital-debris/placeholder-image-2.jpg" alt="Digital Art 2">
+                    <div class="media-overlay">
+                        <div class="media-title">Procedural Forms</div>
+                        <div class="media-description">Generated using algorithmic processes</div>
+                    </div>
+                </div>
+                <div class="grid-item" data-src="../images/projects/digital-debris/placeholder-image-3.webp">
+                    <img src="../images/projects/digital-debris/placeholder-image-3.webp" alt="Digital Art 3">
+                    <div class="media-overlay">
+                        <div class="media-title">Texture Studies</div>
+                        <div class="media-description">Exploration of surface qualities</div>
+                    </div>
+                </div>
+                <div class="grid-item" data-src="../images/projects/digital-debris/placeholder-image-4.webp">
+                    <img src="../images/projects/digital-debris/placeholder-image-4.webp" alt="Digital Art 4">
+                    <div class="media-overlay">
+                        <div class="media-title">Color Theory</div>
+                        <div class="media-description">Study in color relationships</div>
+                    </div>
+                </div>
+                <div class="grid-item" data-src="../images/projects/digital-debris/placeholder-image-5.webp">
+                    <img src="../images/projects/digital-debris/placeholder-image-5.webp" alt="Digital Art 5">
+                    <div class="media-overlay">
+                        <div class="media-title">Abstract Forms</div>
+                        <div class="media-description">Non-representational compositions</div>
+                    </div>
+                </div>
+                <div class="grid-item" data-src="../images/1.mp4">
+                    <video src="../images/1.mp4" muted loop autoplay></video>
+                    <div class="media-overlay">
+                        <div class="media-title">Motion Graphics</div>
+                        <div class="media-description">Dynamic visual sequence</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Masonry Gallery -->
+        <div class="gallery-section">
+            <h2 class="section-title">Masonry Gallery</h2>
+            <div class="masonry-gallery">
+                <div class="masonry-item" data-src="../images/projects/Ignorance.webp">
+                    <img src="../images/projects/Ignorance.webp" alt="Ignorance">
+                    <div class="media-overlay">
+                        <div class="media-title">Ignorance</div>
+                        <div class="media-description">Conceptual artwork about knowledge</div>
+                    </div>
+                </div>
+                <div class="masonry-item" data-src="../images/projects/ai-generated-artwork.png">
+                    <img src="../images/projects/ai-generated-artwork.png" alt="AI Generated">
+                    <div class="media-overlay">
+                        <div class="media-title">AI Generated</div>
+                        <div class="media-description">Machine learning artwork</div>
+                    </div>
+                </div>
+                <div class="masonry-item" data-src="../images/projects/procedural-texture.png">
+                    <img src="../images/projects/procedural-texture.png" alt="Procedural Texture">
+                    <div class="media-overlay">
+                        <div class="media-title">Procedural Texture</div>
+                        <div class="media-description">Algorithmically generated surface</div>
+                    </div>
+                </div>
+                <div class="masonry-item" data-src="../images/projects/artwork-detail-1.webp">
+                    <img src="../images/projects/artwork-detail-1.webp" alt="Artwork Detail 1">
+                    <div class="media-overlay">
+                        <div class="media-title">Detail Study 1</div>
+                        <div class="media-description">Close-up examination</div>
+                    </div>
+                </div>
+                <div class="masonry-item" data-src="../images/projects/artwork-detail-2.webp">
+                    <img src="../images/projects/artwork-detail-2.webp" alt="Artwork Detail 2">
+                    <div class="media-overlay">
+                        <div class="media-title">Detail Study 2</div>
+                        <div class="media-description">Texture and form analysis</div>
+                    </div>
+                </div>
+                <div class="masonry-item" data-src="../images/projects/artwork-detail-3.webp">
+                    <img src="../images/projects/artwork-detail-3.webp" alt="Artwork Detail 3">
+                    <div class="media-overlay">
+                        <div class="media-title">Detail Study 3</div>
+                        <div class="media-description">Material properties</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Featured Gallery -->
+        <div class="gallery-section">
+            <h2 class="section-title">Featured Gallery</h2>
+            <div class="featured-gallery">
+                <div class="featured-main" data-src="../images/projects/artwork-main.webp">
+                    <img src="../images/projects/artwork-main.webp" alt="Main Artwork">
+                    <div class="media-overlay">
+                        <div class="media-title">Featured Artwork</div>
+                        <div class="media-description">Primary piece in the collection</div>
+                    </div>
+                </div>
+                <div class="featured-side" data-src="../images/projects/artwork-variant-1.webp">
+                    <img src="../images/projects/artwork-variant-1.webp" alt="Variant 1">
+                    <div class="media-overlay">
+                        <div class="media-title">Variant 1</div>
+                        <div class="media-description">Alternative composition</div>
+                    </div>
+                </div>
+                <div class="featured-side" data-src="../images/projects/image (3).webp">
+                    <img src="../images/projects/image (3).webp" alt="Study">
+                    <div class="media-overlay">
+                        <div class="media-title">Process Study</div>
+                        <div class="media-description">Development exploration</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Fullscreen Modal -->
+    <div class="fullscreen-modal" id="fullscreenModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeFullscreen()">×</button>
+            <img id="modalImage" src="" alt="" style="display: none;">
+            <video id="modalVideo" controls style="display: none;"></video>
+        </div>
+    </div>
+
+    <script>
+        // Fullscreen functionality
+        function openFullscreen(src, isVideo = false) {
+            const modal = document.getElementById('fullscreenModal');
+            const modalImage = document.getElementById('modalImage');
+            const modalVideo = document.getElementById('modalVideo');
+            
+            if (isVideo) {
+                modalImage.style.display = 'none';
+                modalVideo.style.display = 'block';
+                modalVideo.src = src;
+            } else {
+                modalVideo.style.display = 'none';
+                modalImage.style.display = 'block';
+                modalImage.src = src;
+            }
+            
+            modal.classList.add('active');
+        }
+
+        function closeFullscreen() {
+            const modal = document.getElementById('fullscreenModal');
+            const modalVideo = document.getElementById('modalVideo');
+            modal.classList.remove('active');
+            modalVideo.pause();
+        }
+
+
+        // Add click listeners to gallery items
+        document.addEventListener('DOMContentLoaded', function() {
+            // Grid and masonry items
+            document.querySelectorAll('.grid-item, .masonry-item, .featured-main, .featured-side').forEach(item => {
+                item.addEventListener('click', function() {
+                    const src = this.dataset.src || this.querySelector('img, video').src;
+                    const isVideo = this.querySelector('video') !== null;
+                    openFullscreen(src, isVideo);
+                });
+            });
+
+            // Close modal on background click
+            document.getElementById('fullscreenModal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeFullscreen();
+                }
+            });
+
+            // Close modal on escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeFullscreen();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

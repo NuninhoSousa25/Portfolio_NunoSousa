@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initLanguageToggle();
     initFullscreenGallery();
     initImageSources();
+    initProjectCards();
 });
 
 /**
@@ -1147,4 +1148,12 @@ function initImageSources() {
     } else {
         setImageSources(imageMappings, '../');
     }
+}
+
+/**
+ * Initializes enhanced project cards functionality
+ */
+function initProjectCards() {
+    // Add smooth scroll behavior
+    document.documentElement.style.scrollBehavior = 'smooth';
 }
