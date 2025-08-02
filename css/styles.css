@@ -3,6 +3,7 @@
  * Enhanced stylesheet with modern design elements
  */
 
+
 /* Custom Properties for Better Color Management */
 :root {
     --primary-bg: #121212;
@@ -372,7 +373,6 @@ p {
     border-radius: 8px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
     margin: 2rem auto; /* Center with margin */
-
 }
 
 /* Target the home container when it has the new layout class */
@@ -421,6 +421,7 @@ p {
     height: 100%;
     object-fit: cover;
     transition: transform 8s ease;
+    cursor: pointer;
 }
 
 .slide.active img {
@@ -795,7 +796,7 @@ footer .footer-content {
 /* Project details section - smaller header */
 .project-details {
     margin: 0; /* Remove default margins */
-    padding: 1.5rem;
+    padding: 1rem;
     background: var(--secondary-bg);
     border: 1px solid var(--border-color);
     border-radius: 8px;
@@ -1000,6 +1001,7 @@ footer .footer-content {
 .fullscreen-counter:hover {
     opacity: 1;
 }
+
 
 /* Gallery item enhancements for fullscreen functionality */
 .gallery-item {
@@ -1538,7 +1540,7 @@ body.lang-pt [data-lang="pt"] {
     }
     
     .project-details {
-        padding: 1.5rem;
+        padding: 1rem;
     }
     
     .project-gallery {
