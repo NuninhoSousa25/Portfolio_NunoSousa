@@ -392,44 +392,18 @@ function initThemeElements() {
 function createBackgroundParticles() {
     const particleContainer = document.createElement('div');
     particleContainer.className = 'background-particles';
-    particleContainer.style.cssText = `
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        pointer-events: none;
-        z-index: -1;
-        opacity: 0.15;
-    `;
     
-    // Create particles
-    for (let i = 0; i < 20; i++) {
+    // Create particles with better performance
+    for (let i = 0; i < 15; i++) { // Reduced from 20 to 15 for better performance
         const particle = document.createElement('div');
-        particle.style.cssText = `
-            position: absolute;
-            width: 2px;
-            height: 2px;
-            background: #ff5722;
-            border-radius: 50%;
-            animation: float ${10 + Math.random() * 10}s infinite linear;
-            left: ${Math.random() * 100}%;
-            top: ${Math.random() * 100}%;
-        `;
+        particle.className = 'particle';
+        particle.style.left = `${Math.random() * 100}%`;
+        particle.style.top = `${Math.random() * 100}%`;
+        particle.style.animationDelay = `${Math.random() * 15}s`;
         particleContainer.appendChild(particle);
     }
     
     document.body.appendChild(particleContainer);
-    
-    // Add CSS animation for particles
-    const style = document.createElement('style');
-    style.textContent = `
-        @keyframes float {
-            0% { transform: translateY(0px) rotate(0deg); }
-            100% { transform: translateY(-100vh) rotate(360deg); }
-        }
-    `;
-    document.head.appendChild(style);
 }
 
 /**
@@ -463,18 +437,7 @@ function enhanceProjectItems() {
  */
 function showNotification(message, type = 'info') {
     const notification = document.createElement('div');
-    notification.className = `notification notification-${type}`;
-    notification.style.cssText = `
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        padding: 1rem 1.5rem;
-        background: ${type === 'success' ? '#4caf50' : type === 'error' ? '#f44336' : '#2196f3'};
-        color: white;
-        border-radius: 4px;
-        z-index: 10000;
-        animation: slideInNotification 0.3s ease;
-    `;
+    notification.className = `notification ${type}`;
     notification.textContent = message;
     
     document.body.appendChild(notification);
@@ -484,23 +447,6 @@ function showNotification(message, type = 'info') {
         notification.style.animation = 'slideOutNotification 0.3s ease';
         setTimeout(() => notification.remove(), 300);
     }, 3000);
-    
-    // Add notification animations
-    if (!document.querySelector('#notification-styles')) {
-        const style = document.createElement('style');
-        style.id = 'notification-styles';
-        style.textContent = `
-            @keyframes slideInNotification {
-                from { transform: translateX(100%); opacity: 0; }
-                to { transform: translateX(0); opacity: 1; }
-            }
-            @keyframes slideOutNotification {
-                from { transform: translateX(0); opacity: 1; }
-                to { transform: translateX(100%); opacity: 0; }
-            }
-        `;
-        document.head.appendChild(style);
-    }
 }
 
 /**
@@ -547,7 +493,6 @@ function copyEmailToClipboard(event) {
         navigator.clipboard.writeText(email).then(() => {
             showEmailCopiedNotification();
         }).catch(err => {
-            console.error('Failed to copy email: ', err);
             fallbackCopyTextToClipboard(email);
         });
     } else {
@@ -562,12 +507,7 @@ function copyEmailToClipboard(event) {
 function fallbackCopyTextToClipboard(text) {
     const textArea = document.createElement("textarea");
     textArea.value = text;
-    
-    // Avoid scrolling to bottom
-    textArea.style.top = "0";
-    textArea.style.left = "0";
-    textArea.style.position = "fixed";
-    textArea.style.opacity = "0";
+    textArea.className = 'clipboard-textarea';
     
     document.body.appendChild(textArea);
     textArea.focus();
@@ -577,11 +517,9 @@ function fallbackCopyTextToClipboard(text) {
         const successful = document.execCommand('copy');
         if (successful) {
             showEmailCopiedNotification();
-        } else {
-            console.error('Fallback: Could not copy text');
         }
     } catch (err) {
-        console.error('Fallback: Could not copy text: ', err);
+        // Silent fallback - clipboard copy failed
     }
     
     document.body.removeChild(textArea);
@@ -641,19 +579,6 @@ function showEmailCopiedNotification() {
     // Create notification
     const notification = document.createElement('div');
     notification.className = 'email-copied-notification';
-    notification.style.cssText = `
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        background: var(--accent-color);
-        color: white;
-        padding: 1rem 1.5rem;
-        border-radius: 8px;
-        z-index: 10000;
-        font-size: 0.9rem;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-        animation: slideInEmailNotification 0.3s ease-out;
-    `;
     
     // Check current language and set appropriate message
     const isPortuguese = document.body.classList.contains('lang-pt');
@@ -666,35 +591,6 @@ function showEmailCopiedNotification() {
         notification.style.animation = 'slideOutEmailNotification 0.3s ease-out';
         setTimeout(() => notification.remove(), 300);
     }, 3000);
-    
-    // Add CSS animations if not already present
-    if (!document.querySelector('#email-notification-styles')) {
-        const style = document.createElement('style');
-        style.id = 'email-notification-styles';
-        style.textContent = `
-            @keyframes slideInEmailNotification {
-                from { 
-                    transform: translateX(100%); 
-                    opacity: 0; 
-                }
-                to { 
-                    transform: translateX(0); 
-                    opacity: 1; 
-                }
-            }
-            @keyframes slideOutEmailNotification {
-                from { 
-                    transform: translateX(0); 
-                    opacity: 1; 
-                }
-                to { 
-                    transform: translateX(100%); 
-                    opacity: 0; 
-                }
-            }
-        `;
-        document.head.appendChild(style);
-    }
 }
 
 /**
@@ -897,47 +793,46 @@ class FullscreenGallery {
         if (!this.media.length) return;
         
         const currentMedia = this.media[this.currentIndex];
+        const elements = [this.fullscreenImg, this.fullscreenVideo, this.fullscreenYoutube];
         
-        // Hide all elements first
-        if (this.fullscreenImg) this.fullscreenImg.style.display = 'none';
-        if (this.fullscreenVideo) this.fullscreenVideo.style.display = 'none';
-        if (this.fullscreenYoutube) this.fullscreenYoutube.style.display = 'none';
+        // Hide all elements and reset
+        elements.forEach(el => {
+            if (el) {
+                el.style.display = 'none';
+                if (el.tagName === 'VIDEO') el.pause();
+                if (el.tagName === 'IFRAME') el.src = '';
+            }
+        });
         
-        // Pause any playing video and stop YouTube
-        if (this.fullscreenVideo) this.fullscreenVideo.pause();
-        if (this.fullscreenYoutube) this.fullscreenYoutube.src = '';
-        
-        if (currentMedia.type === 'video') {
-            // Show video
+        // Show appropriate element
+        if (currentMedia.type === 'video' && this.fullscreenVideo) {
             this.fullscreenVideo.style.display = 'block';
             this.fullscreenVideo.src = currentMedia.src;
-            this.fullscreenVideo.load(); // Reload the video
+            this.fullscreenVideo.load();
             
-            // Autoplay the video when it's ready
+            // Autoplay the video when ready
             this.fullscreenVideo.addEventListener('loadeddata', () => {
-                this.fullscreenVideo.play().catch(error => {
-                    console.log('Autoplay prevented by browser:', error);
+                this.fullscreenVideo.play().catch(() => {
+                    // Autoplay prevented - expected behavior
                 });
             }, { once: true });
-        } else if (currentMedia.type === 'youtube') {
-            // Show YouTube video
+        } else if (currentMedia.type === 'youtube' && this.fullscreenYoutube) {
             this.fullscreenYoutube.style.display = 'block';
             this.fullscreenYoutube.src = FullscreenGallery.getYouTubeEmbedUrl(currentMedia.src);
-        } else {
-            // Show image
+        } else if (this.fullscreenImg) {
             this.fullscreenImg.style.display = 'block';
             this.fullscreenImg.src = currentMedia.src;
             this.fullscreenImg.alt = currentMedia.alt;
         }
         
-        // Update counter
+        // Update counter and navigation
         if (this.counter) {
             this.counter.textContent = `${this.currentIndex + 1} / ${this.media.length}`;
         }
         
-        // Update navigation button visibility
-        if (this.prevBtn) this.prevBtn.style.display = this.media.length > 1 ? 'flex' : 'none';
-        if (this.nextBtn) this.nextBtn.style.display = this.media.length > 1 ? 'flex' : 'none';
+        const showNav = this.media.length > 1;
+        if (this.prevBtn) this.prevBtn.style.display = showNav ? 'flex' : 'none';
+        if (this.nextBtn) this.nextBtn.style.display = showNav ? 'flex' : 'none';
     }
     
     handleSwipe() {

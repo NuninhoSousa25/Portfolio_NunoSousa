@@ -7,7 +7,6 @@
 :root {
     --primary-bg: #121212;
     --secondary-bg: #1a1a1a;
-    --tertiary-bg: #262626;
     --accent-color: #ff5722;
     --accent-hover: #ff9800;
     --text-primary: #ffffff;
@@ -847,6 +846,10 @@ footer .footer-content {
     margin: 3rem 0 2rem;
 }
 
+/* ===================================== */
+/* ======== PROJECT GALLERIES ========= */
+/* ===================================== */
+
 .project-gallery h3 {
     grid-column: 1 / -1;
     font-size: 1.3rem;
@@ -857,32 +860,10 @@ footer .footer-content {
     margin-bottom: 1rem;
 }
 
-.gallery-item {
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    overflow: hidden;
-    transition: all var(--transition-normal);
-}
 
-.gallery-item:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-    border-color: var(--border-hover);
-}
-
-.gallery-item img {
-    width: 100%;
-    height: auto;
-    min-height: 200px;
-    object-fit: cover;
-    transition: transform var(--transition-normal);
-}
-
-.gallery-item:hover img {
-    transform: scale(1.05);
-}
-
-/* ==== FULLSCREEN GALLERY STYLES ==== */
+/* ===================================== */
+/* ======= FULLSCREEN GALLERY ========= */
+/* ===================================== */
 /* Fullscreen Gallery Overlay */
 .fullscreen-overlay {
     position: fixed;
@@ -1159,6 +1140,117 @@ footer .footer-content {
     margin: 3rem 0;
     padding-top: 2rem;
     border-top: 1px solid var(--border-color);
+}
+
+/* ===================================== */
+/* ========= UI COMPONENTS ============ */
+/* ===================================== */
+
+/* Background particles optimization */
+.background-particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+    opacity: 0.15;
+}
+
+.particle {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: var(--accent-color);
+    border-radius: 50%;
+    animation: float 15s infinite linear;
+}
+
+@keyframes float {
+    0% { transform: translateY(0px) rotate(0deg); }
+    100% { transform: translateY(-100vh) rotate(360deg); }
+}
+
+/* Notification styles */
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 1rem 1.5rem;
+    border-radius: 4px;
+    z-index: 10000;
+    animation: slideInNotification 0.3s ease;
+}
+
+.notification.success {
+    background: #4caf50;
+    color: white;
+}
+
+.notification.error {
+    background: #f44336;
+    color: white;
+}
+
+.notification.info {
+    background: #2196f3;
+    color: white;
+}
+
+.email-copied-notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: var(--accent-color);
+    color: white;
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    z-index: 10000;
+    font-size: 0.9rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    animation: slideInEmailNotification 0.3s ease-out;
+}
+
+@keyframes slideInNotification {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slideOutNotification {
+    from { transform: translateX(0); opacity: 1; }
+    to { transform: translateX(100%); opacity: 0; }
+}
+
+@keyframes slideInEmailNotification {
+    from { 
+        transform: translateX(100%); 
+        opacity: 0; 
+    }
+    to { 
+        transform: translateX(0); 
+        opacity: 1; 
+    }
+}
+
+@keyframes slideOutEmailNotification {
+    from { 
+        transform: translateX(0); 
+        opacity: 1; 
+    }
+    to { 
+        transform: translateX(100%); 
+        opacity: 0; 
+    }
+}
+
+/* Utility classes for better performance */
+.clipboard-textarea {
+    position: fixed;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    pointer-events: none;
 }
 
 .back-to-projects {
