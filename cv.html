@@ -10,27 +10,49 @@
     <!-- === CONSISTENT HEADER === -->
     <header id="main-header"> 
         <div class="header-content"> 
-            <h1>NUNO SOUSA</h1>
-            <p class="subtitle">✷ Artist ✷ Teacher ✷ Researcher ✷</p>
+            <h1><a href="index.html#home" class="header-logo-link">NUNO SOUSA</a></h1>
+            <p class="subtitle"> Artist ✷ Teacher ✷ Researcher</p>
         </div>
-        <nav id="main-nav">
-            <ul>
-                <li><a href="index.html#home">Home</a></li>
-                <li><a href="index.html#projects">Projects</a></li>
-                <li><a href="index.html#about">About</a></li>
-                <li><a href="cv.html">CV</a></li>
-                <li><a href="index.html#contact">Contact</a></li>
-            </ul>
-        </nav>
+        
+        <button class="hamburger-menu" aria-label="Toggle menu" aria-expanded="false" aria-controls="header-nav-section">
+            <span class="hamburger-box">
+                <span class="hamburger-inner"></span>
+            </span>
+        </button>
+        
+        <div class="header-nav-section" id="header-nav-section">
+            <nav id="main-nav">
+                <ul>
+                    <li><a href="index.html#home" data-lang="en">Home</a></li>
+                    <li><a href="index.html#home" data-lang="pt">Início</a></li>
+                    <li><a href="index.html#projects" data-lang="en">Projects</a></li>
+                    <li><a href="index.html#projects" data-lang="pt">Projetos</a></li>
+                    <li><a href="index.html#products" data-lang="en">Products</a></li>
+                    <li><a href="index.html#products" data-lang="pt">Produtos</a></li>
+                    <li><a href="index.html#about" data-lang="en">About</a></li>
+                    <li><a href="index.html#about" data-lang="pt">Sobre</a></li>
+                    <li><a href="index.html#contact" data-lang="en">Contact</a></li>
+                    <li><a href="index.html#contact" data-lang="pt">Contato</a></li>
+                </ul>
+            </nav>
+            
+            <div class="language-toggle">
+                <span class="lang-option active" data-lang-switch="en">EN</span>
+                <span class="lang-option" data-lang-switch="pt">PT</span>
+            </div>
+        </div>
     </header>
 
     <main class="project-page">
         <!-- CV Title Section -->
         <section class="project-hero">
-            <h1>Curriculum Vitae</h1>
+            <h1 data-lang="en">Curriculum Vitae</h1>
+            <h1 data-lang="pt">Curriculum Vitae</h1>
             <div class="project-meta">
-                <span class="category">Professional History</span>
-                <span class="updated">Updated July 2025</span>
+                <span class="category" data-lang="en">Professional History</span>
+                <span class="category" data-lang="pt">História Profissional</span>
+                <span class="updated" data-lang="en">Updated August 2025</span>
+                <span class="updated" data-lang="pt">Atualizado Agosto 2025</span>
             </div>
         </section>
 
@@ -38,7 +60,8 @@
         <section class="project-content">
             <div class="cv-grid">
                 <div class="cv-item">
-                    <h3>PROFESSIONAL EXPERIENCE</h3>
+                    <h3 data-lang="en">PROFESSIONAL EXPERIENCE</h3>
+                    <h3 data-lang="pt">EXPERIÊNCIA PROFISSIONAL</h3>
                     <ul>
                         <li>Integrated Researcher<br>Centro de Investigação do ISCE Douro (2024-Present)</li>
                         <li>Teacher - Digital Art Laboratory<br>ISCE Douro, Portugal (2024-Present)</li>
@@ -49,7 +72,8 @@
                 </div>
 
                 <div class="cv-item">
-                    <h3>TEACHING EXPERIENCE</h3>
+                    <h3 data-lang="en">TEACHING EXPERIENCE</h3>
+                    <h3 data-lang="pt">EXPERIÊNCIA DE ENSINO</h3>
                     <ul>
                         <li><strong>Digital Art Laboratory</strong><br>ISCE Douro (2024-Present)<br>Advanced digital art techniques and creative software</li>
                         <li><strong>3D Modelling</strong><br>ISCE Douro (2021-Present)<br>Fundamentals and advanced 3D modeling techniques</li>
@@ -59,7 +83,8 @@
                 </div>
 
                 <div class="cv-item">
-                    <h3>TECHNICAL EXPERTISE</h3>
+                    <h3 data-lang="en">TECHNICAL EXPERTISE</h3>
+                    <h3 data-lang="pt">COMPETÊNCIAS TÉCNICAS</h3>
                     <ul>
                         <li><strong>3D Software:</strong> Blender, Cinema 4D, 3ds Max, Maya</li>
                         <li><strong>Photogrammetry:</strong> Agisoft Metashape, RealityCapture, Meshroom</li>
@@ -71,7 +96,8 @@
                 </div>
 
                 <div class="cv-item">
-                    <h3>RECENT EXHIBITIONS</h3>
+                    <h3 data-lang="en">RECENT EXHIBITIONS</h3>
+                    <h3 data-lang="pt">EXPOSIÇÕES RECENTES</h3>
                     <ul>
                         <li>Forget to Protect | Wax Sculptures<br>Metamorphosis, Ectopia Lab, Lisboa (2024)</li>
                         <li>Musgos | Live VJ performance<br>Alive Festival, Canelas, Aveiro (2024)</li>
@@ -82,7 +108,8 @@
                 </div>
 
                 <div class="cv-item">
-                    <h3>EDUCATION</h3>
+                    <h3 data-lang="en">EDUCATION</h3>
+                    <h3 data-lang="pt">EDUCAÇÃO</h3>
                     <ul>
                         <li>PhD in Artistic Creation (Ongoing)<br>Universidade de Aveiro, Portugal</li>
                         <li>Master in Contemporary Artistic Creation<br>Universidade de Aveiro, Portugal (2020-2022)</li>
@@ -92,7 +119,8 @@
                 </div>
 
                 <div class="cv-item">
-                    <h3>ACADEMIC PAPERS</h3>
+                    <h3 data-lang="en">ACADEMIC PAPERS</h3>
+                    <h3 data-lang="pt">ARTIGOS ACADÉMICOS</h3>
                     <ul>
                         <li>Agricultor de memórias<br>23ART2024 International Conference (2024)</li>
                         <li>Archiving as a Dialogue<br>RE:SOURCE International Conference (2023)</li>
@@ -102,7 +130,8 @@
                 </div>
 
                 <div class="cv-item">
-                    <h3>ARTISTIC RESIDENCIES</h3>
+                    <h3 data-lang="en">ARTISTIC RESIDENCIES</h3>
+                    <h3 data-lang="pt">RESIDÊNCIAS ARTÍSTICAS</h3>
                     <ul>
                         <li>Forget to Protect w/ Sofia Aires<br>Ectopia Lab, Lisboa (February 2024)</li>
                         <li>Presences in Refraction w/André Araujo<br>Ectopia Lab, Lisboa (February 2022)</li>
@@ -111,7 +140,8 @@
                 </div>
 
                 <div class="cv-item">
-                    <h3>SKILLS</h3>
+                    <h3 data-lang="en">SKILLS</h3>
+                    <h3 data-lang="pt">COMPETÊNCIAS</h3>
                     <ul>
                         <li>3D Modeling & Rendering</li>
                         <li>Photogrammetry</li>
@@ -129,13 +159,16 @@
         <div class="project-navigation">
             <a href="index.html#about" class="back-to-projects">
                 <span class="nav-icon">←</span>
-                <span>Back to About</span>
+                <span data-lang="en">Back to About</span>
+                <span data-lang="pt">Voltar ao Sobre</span>
             </a>
         </div>
     </main>
 
     <footer>
-        <p>&copy; 2025 Nuno Sousa. All rights reserved.</p>
+        <div class="footer-content">
+            <p>&copy; 2025 Nuno Sousa. All rights reserved.</p>
+        </div>
     </footer>
 
     <script src="js/imageConfig.js"></script>

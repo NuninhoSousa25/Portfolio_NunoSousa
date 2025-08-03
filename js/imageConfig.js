@@ -55,7 +55,7 @@ const ImageConfig = {
     projects: {
         digitalDebris: {
             main: {
-                src: 'images/projects/digital-debris/your-image-name.jpg',
+                src: 'images/projects/digital-debris/placeholder-image-1.jpg',
                 alt: 'Digital Debris - Main Image'
             },
             gallery: [
@@ -95,19 +95,27 @@ const ImageConfig = {
         
         limbo: {
             main: {
-                src: 'images/projects/limbo/main-image.jpg',
+                src: 'images/projects/limbo/1638058792448.jpg',
                 alt: 'Limbo - Main Image'
             },
             gallery: [
                 {
-                    src: 'images/projects/limbo/DSC01828.jpg',
+                    src: 'images/projects/limbo/1638058792468.jpg',
                     alt: 'Limbo - Gallery Image 1'
                 },
                 {
-                    src: 'images/projects/limbo/your-image-name.jpg',
+                    src: 'images/projects/limbo/1638058925360.jpg',
                     alt: 'Limbo - Gallery Image 2'
+                },
+                {
+                    src: 'images/projects/limbo/untitled2.png',
+                    alt: 'Limbo - Gallery Image 3'
                 }
-            ]
+            ],
+            video: {
+                src: 'images/projects/limbo/VID_20211021_224756.mp4',
+                alt: 'Limbo - Performance Video'
+            }
         },
         
         oCaco: {
@@ -119,9 +127,45 @@ const ImageConfig = {
         
         sediments: {
             main: {
-                src: 'images/projects/sediments/your-image-name.jpg',
+                src: 'images/projects/sediments/Sediments%20%231221.jpg',
                 alt: 'Sediments - Main Image'
-            }
+            },
+            gallery: [
+                {
+                    src: 'images/projects/sediments/Image40028.jpg',
+                    alt: 'Sediments - Gallery Image 1'
+                },
+                {
+                    src: 'images/projects/sediments/Sediments%20%231795_waifu2x_2x_jpg.png',
+                    alt: 'Sediments - Gallery Image 2'
+                },
+                {
+                    src: 'images/projects/sediments/Sediments%20%232234.jpg',
+                    alt: 'Sediments - Gallery Image 3'
+                },
+                {
+                    src: 'images/projects/sediments/Sediments%20%233423_waifu2x_2x_jpg.png',
+                    alt: 'Sediments - Gallery Image 4'
+                },
+                {
+                    src: 'images/projects/sediments/Sediments%20%235471_waifu2x_2x_jpg.png',
+                    alt: 'Sediments - Gallery Image 5'
+                },
+                {
+                    src: 'images/projects/sediments/Sediments%20%23783%20(Personalizar).png',
+                    alt: 'Sediments - Gallery Image 6'
+                }
+            ],
+            videos: [
+                {
+                    src: 'images/projects/sediments/0001-0046.mp4',
+                    alt: 'Sediments - Process Video 1'
+                },
+                {
+                    src: 'images/projects/sediments/0001-0046_waifu2x_1x_4n_mp4.mp4',
+                    alt: 'Sediments - Enhanced Process Video'
+                }
+            ]
         },
         
         artwork: {
@@ -160,34 +204,113 @@ const ImageConfig = {
             }
         },
         
-        misc: {
-            ignorance: {
-                src: 'images/projects/Ignorance.webp',
-                alt: 'Ignorance'
+        osNossosSeresSaoIguais: {
+            main: {
+                src: 'images/projects/os-nossos-seres-sao-iguais/1.jpg',
+                alt: 'Our Beings Are Alike - Main Image'
             },
+            gallery: [
+                {
+                    src: 'images/projects/os-nossos-seres-sao-iguais/2.jpg',
+                    alt: 'Our Beings Are Alike - Gallery Image 1'
+                },
+                {
+                    src: 'images/projects/os-nossos-seres-sao-iguais/3.jpg',
+                    alt: 'Our Beings Are Alike - Gallery Image 2'
+                },
+                {
+                    src: 'images/projects/os-nossos-seres-sao-iguais/6.jpg',
+                    alt: 'Our Beings Are Alike - Gallery Image 3'
+                },
+                {
+                    src: 'images/projects/os-nossos-seres-sao-iguais/8.jpg',
+                    alt: 'Our Beings Are Alike - Gallery Image 4'
+                },
+                {
+                    src: 'images/projects/os-nossos-seres-sao-iguais/9.jpg',
+                    alt: 'Our Beings Are Alike - Gallery Image 5'
+                },
+                {
+                    src: 'images/projects/os-nossos-seres-sao-iguais/12.jpg',
+                    alt: 'Our Beings Are Alike - Gallery Image 6'
+                },
+                {
+                    src: 'images/projects/os-nossos-seres-sao-iguais/13.jpg',
+                    alt: 'Our Beings Are Alike - Gallery Image 7'
+                },
+                {
+                    src: 'images/projects/os-nossos-seres-sao-iguais/14.jpg',
+                    alt: 'Our Beings Are Alike - Gallery Image 8'
+                }
+            ]
+        },
+        
+        aStudyIn3D: {
+            main: {
+                src: 'images/projects/ai-generated-artwork.png',
+                alt: 'A Study in 3D - Main Image'
+            },
+            gallery: [
+                {
+                    src: 'images/projects/artwork-detail-1.webp',
+                    alt: 'A Study in 3D - Detail 1'
+                },
+                {
+                    src: 'images/projects/artwork-detail-2.webp',
+                    alt: 'A Study in 3D - Detail 2'
+                },
+                {
+                    src: 'images/projects/artwork-detail-3.webp',
+                    alt: 'A Study in 3D - Detail 3'
+                },
+                {
+                    src: 'images/projects/artwork-main.webp',
+                    alt: 'A Study in 3D - Main Artwork'
+                },
+                {
+                    src: 'images/projects/artwork-variant-1.webp',
+                    alt: 'A Study in 3D - Variant'
+                },
+                {
+                    src: 'images/projects/procedural-texture.png',
+                    alt: 'A Study in 3D - Procedural Texture'
+                }
+            ]
+        },
+        
+        iCantLiveWithoutYou: {
+            main: {
+                src: 'images/projects/Gemini_Generated_Image_uvusrtuvusrtuvus.jpg',
+                alt: 'I Can\'t Live Without You - Main Image'
+            },
+            gallery: [
+                {
+                    src: 'images/projects/ChatGPT Image Apr 21, 2025, 01_39_21 PM.webp',
+                    alt: 'I Can\'t Live Without You - AI Generated Imagery'
+                },
+                {
+                    src: 'images/projects/image (3).webp',
+                    alt: 'I Can\'t Live Without You - Interactive Interface'
+                },
+                {
+                    src: 'images/projects/image (4).webp',
+                    alt: 'I Can\'t Live Without You - Digital Consciousness'
+                },
+                {
+                    src: 'images/projects/WhatsApp Image 2022-08-24 at 23.34.15.jpeg',
+                    alt: 'I Can\'t Live Without You - Process Documentation'
+                },
+                {
+                    src: 'images/projects/Ignorance.webp',
+                    alt: 'I Can\'t Live Without You - Conceptual Studies'
+                }
+            ]
+        },
+        
+        misc: {
             telephone: {
                 src: 'images/projects/Ceci n\'est pas un Telephone (3_4 sedimentss).webp',
                 alt: 'Ceci n\'est pas un Telephone'
-            },
-            chatgptImage: {
-                src: 'images/projects/ChatGPT Image Apr 21, 2025, 01_39_21 PM.webp',
-                alt: 'ChatGPT Generated Image'
-            },
-            geminiImage: {
-                src: 'images/projects/Gemini_Generated_Image_uvusrtuvusrtuvus.jpg',
-                alt: 'Gemini Generated Image'
-            },
-            whatsappImage: {
-                src: 'images/projects/WhatsApp Image 2022-08-24 at 23.34.15.jpeg',
-                alt: 'WhatsApp Image'
-            },
-            image3: {
-                src: 'images/projects/image (3).webp',
-                alt: 'Project Image 3'
-            },
-            image4: {
-                src: 'images/projects/image (4).webp',
-                alt: 'Project Image 4'
             }
         },
         
