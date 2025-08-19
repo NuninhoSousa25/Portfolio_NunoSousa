@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initContactForm();
     initThemeElements();
     initLanguageToggle();
+    initThemeToggle();
     initFullscreenGallery();
     initImageSources();
     initProjectCards();
@@ -454,24 +455,7 @@ function createBackgroundParticles() {
  * Enhance project item interactions
  */
 function enhanceProjectItems() {
-    const projectItems = document.querySelectorAll('.project-item');
-    
-    projectItems.forEach(item => {
-        item.addEventListener('mouseenter', function() {
-            // Add subtle zoom to image
-            const img = this.querySelector('img');
-            if (img) {
-                img.style.transform = 'scale(1.1)';
-            }
-        });
-        
-        item.addEventListener('mouseleave', function() {
-            const img = this.querySelector('img');
-            if (img) {
-                img.style.transform = 'scale(1)';
-            }
-        });
-    });
+    // Removed image scaling effects for minimal hover interaction
 }
 
 
@@ -607,6 +591,44 @@ function initLanguageToggle() {
         
         // Update page language attribute
         document.documentElement.lang = lang;
+    }
+}
+
+/**
+ * Theme Toggle Functionality
+ */
+function initThemeToggle() {
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeIcon = document.querySelector('.theme-icon');
+    const themeCss = document.getElementById('theme-css');
+    
+    if (!themeToggle || !themeCss) return;
+    
+    // Get saved theme or default to light
+    const savedTheme = localStorage.getItem('preferred-theme') || 'light';
+    setTheme(savedTheme);
+    
+    themeToggle.addEventListener('click', function() {
+        const currentTheme = themeCss.getAttribute('href').includes('styles-dark.css') ? 'dark' : 'light';
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        setTheme(newTheme);
+        localStorage.setItem('preferred-theme', newTheme);
+    });
+    
+    function setTheme(theme) {
+        const currentHref = themeCss.getAttribute('href');
+        const isInSubdirectory = currentHref.includes('../css/');
+        const basePath = isInSubdirectory ? '../css/' : 'css/';
+        
+        if (theme === 'dark') {
+            themeCss.setAttribute('href', basePath + 'styles-dark.css');
+            themeIcon.textContent = '☀️';
+            themeToggle.setAttribute('aria-label', 'Switch to light theme');
+        } else {
+            themeCss.setAttribute('href', basePath + 'styles.css');
+            themeIcon.textContent = '🌙';
+            themeToggle.setAttribute('aria-label', 'Switch to dark theme');
+        }
     }
 }
 
