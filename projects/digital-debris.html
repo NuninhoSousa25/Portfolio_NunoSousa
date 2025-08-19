@@ -143,7 +143,32 @@
         </div>
     </footer>
 
+    <!-- Early theme/language initialization -->
+    <script>
+        // Apply saved theme and language immediately to prevent flash
+        (function() {
+            const savedTheme = localStorage.getItem('preferred-theme') || 'light';
+            const savedLang = localStorage.getItem('preferred-language') || 'en';
+            const themeCss = document.getElementById('theme-css');
+            
+            // Set theme
+            if (themeCss) {
+                const basePath = '../css/';
+                if (savedTheme === 'dark') {
+                    themeCss.setAttribute('href', basePath + 'styles-dark.css');
+                } else {
+                    themeCss.setAttribute('href', basePath + 'styles.css');
+                }
+            }
+            
+            // Set language
+            document.body.className = document.body.className.replace(/lang-\w+/g, '');
+            document.body.classList.add(`lang-${savedLang}`);
+            document.documentElement.lang = savedLang;
+        })();
+    </script>
+    
     <script src="../js/imageConfig.js"></script>
-    <script src="../js/main.js"></script>
+    <script type="module" src="../js/app.js"></script>
 </body>
 </html>
