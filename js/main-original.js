@@ -75,14 +75,7 @@ function initSlideshow() {
     ).join('');
     slideshowContainer.appendChild(indicatorsContainer);
     
-    // Create navigation arrows
-    const navContainer = document.createElement('div');
-    navContainer.className = 'slideshow-nav';
-    navContainer.innerHTML = `
-        <button class="nav-btn prev" aria-label="Previous slide">‹</button>
-        <button class="nav-btn next" aria-label="Next slide">›</button>
-    `;
-    slideshowContainer.appendChild(navContainer);
+    // Navigation arrows removed to prevent UI artifacts
     
     function showSlide(n) {
         // Hide all slides and remove active class
@@ -117,18 +110,7 @@ function initSlideshow() {
         clearInterval(slideInterval);
     }
     
-    // Event listeners
-    document.querySelector('.prev')?.addEventListener('click', () => {
-        prevSlide();
-        stopSlideshow();
-        setTimeout(startSlideshow, 8000); // Resume after 8 seconds
-    });
-    
-    document.querySelector('.next')?.addEventListener('click', () => {
-        nextSlide();
-        stopSlideshow();
-        setTimeout(startSlideshow, 8000);
-    });
+    // Navigation arrow event listeners removed
     
     // Indicator click events
     document.querySelectorAll('.indicator').forEach((indicator, index) => {
@@ -423,33 +405,11 @@ function initContactForm() {
  * Theme and visual enhancement elements
  */
 function initThemeElements() {
-    // Add dynamic background particles (optional)
-    createBackgroundParticles();
-    
     // Add hover effects to project items
     enhanceProjectItems();
     
 }
 
-/**
- * Create subtle background particles
- */
-function createBackgroundParticles() {
-    const particleContainer = document.createElement('div');
-    particleContainer.className = 'background-particles';
-    
-    // Create particles with better performance
-    for (let i = 0; i < 15; i++) { // Reduced from 20 to 15 for better performance
-        const particle = document.createElement('div');
-        particle.className = 'particle';
-        particle.style.left = `${Math.random() * 100}%`;
-        particle.style.top = `${Math.random() * 100}%`;
-        particle.style.animationDelay = `${Math.random() * 15}s`;
-        particleContainer.appendChild(particle);
-    }
-    
-    document.body.appendChild(particleContainer);
-}
 
 /**
  * Enhance project item interactions

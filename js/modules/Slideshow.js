@@ -33,29 +33,11 @@ export class Slideshow {
         ).join('');
         this.slideshowContainer.appendChild(indicatorsContainer);
         
-        // Create navigation arrows
-        const navContainer = document.createElement('div');
-        navContainer.className = 'slideshow-nav';
-        navContainer.innerHTML = `
-            <button class="nav-btn prev" aria-label="Previous slide">‹</button>
-            <button class="nav-btn next" aria-label="Next slide">›</button>
-        `;
-        this.slideshowContainer.appendChild(navContainer);
+        // Navigation arrows removed to prevent UI artifacts
     }
     
     addEventListeners() {
-        // Event listeners
-        document.querySelector('.prev')?.addEventListener('click', () => {
-            this.prevSlide();
-            this.stopSlideshow();
-            setTimeout(() => this.startSlideshow(), 8000); // Resume after 8 seconds
-        });
-        
-        document.querySelector('.next')?.addEventListener('click', () => {
-            this.nextSlide();
-            this.stopSlideshow();
-            setTimeout(() => this.startSlideshow(), 8000);
-        });
+        // Navigation arrow event listeners removed
         
         // Indicator click events
         document.querySelectorAll('.indicator').forEach((indicator, index) => {
@@ -83,16 +65,12 @@ export class Slideshow {
             if (e.key === 'ArrowRight') this.nextSlide();
         });
         
-        // Make slideshow images clickable for fullscreen
+        // Make slideshow images clickable for fullscreen - same as grid gallery
         this.slides.forEach((slide, index) => {
             const img = slide.querySelector('img');
             if (img) {
+                img.classList.add('gallery-clickable');
                 img.style.cursor = 'pointer';
-                img.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    // Open fullscreen gallery starting with the currently active slide
-                    this.openSlideshowInFullscreen(this.currentSlide);
-                });
             }
         });
     }
@@ -128,46 +106,5 @@ export class Slideshow {
     
     stopSlideshow() {
         clearInterval(this.slideInterval);
-    }
-    
-    /**
-     * Opens slideshow images in fullscreen gallery
-     */
-    openSlideshowInFullscreen(startIndex) {
-        // Get all slideshow images
-        const slides = document.querySelectorAll('.slide img');
-        if (!slides.length) return;
-        
-        // Create media array for slideshow images
-        const slideshowMedia = Array.from(slides).map(img => ({
-            src: img.src,
-            alt: img.alt || 'Slideshow Image',
-            type: 'image',
-            element: img
-        }));
-        
-        // Create or get existing fullscreen gallery
-        if (!window.slideshowGallery) {
-            // Gallery will be available through the app's gallery module
-            if (window.portfolioApp && window.portfolioApp.modules.gallery) {
-                window.slideshowGallery = window.portfolioApp.modules.gallery;
-            } else {
-                // Fallback: try to find an existing gallery instance
-                const existingGallery = document.getElementById('fullscreen-gallery');
-                if (existingGallery) {
-                    // Gallery exists but we need to create a new instance
-                    // This is a simplified fallback
-                    console.warn('Gallery module not available, slideshow fullscreen functionality limited');
-                    return;
-                }
-            }
-        }
-        
-        if (window.slideshowGallery) {
-            // Replace media array with slideshow images
-            window.slideshowGallery.media = slideshowMedia;
-            // Open gallery at the specified index
-            window.slideshowGallery.openGallery(startIndex);
-        }
     }
 }

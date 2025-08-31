@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nuno Sousa | 3D Artist</title>
+    
+    <!-- Performance optimizations -->
+    <link rel="preload" href="css/styles.css" as="style">
+    <link rel="preload" href="js/imageConfig.js" as="script">
+    <link rel="preload" href="js/app.js" as="script">
+    <link rel="preload" href="images/slideshow/1.png" as="image" type="image/png">
+    
     <link rel="stylesheet" href="css/styles.css" id="theme-css">
 </head>
 <body>
@@ -59,13 +66,13 @@
             <div class="home-container layout-side-by-side">
                 <div class="slideshow-container">
                     <div class="slide active">
-                        <img src="images/slideshow/1.jpg" alt="Nuno Sousa Artwork 1">
+                        <img src="images/slideshow/1.png" alt="Nuno Sousa Artwork 1">
                     </div>
                     <div class="slide">
-                        <img src="images/slideshow/2.jpg" alt="Nuno Sousa Artwork 2">
+                        <img src="images/slideshow/2.jpg" alt="Nuno Sousa Artwork 2" loading="lazy">
                     </div>
                     <div class="slide">
-                        <img src="images/slideshow/3.jpg" alt="Nuno Sousa Artwork 3">
+                        <img src="images/slideshow/3.jpg" alt="Nuno Sousa Artwork 3" loading="lazy">
                     </div>
                 </div>
 
@@ -99,7 +106,7 @@
                 <!-- Digital Debri Project -->
                 <div class="project-item">
                     <a href="projects/digital-debris.html">
-                        <img src="images/projects/digital-debris/main.webp" alt="Digital Debris">
+                        <img src="images/projects/digital-debris/1.webp" alt="Digital Debris" loading="lazy">
                         <div class="project-info-overlay">
                             <div class="project-title">Digital Debri</div>
                             <div class="project-meta">
@@ -113,7 +120,7 @@
                 <!-- Sediments Project -->
                 <div class="project-item">
                     <a href="projects/sediments.html">
-                        <img src="images/projects/sediments/main.webp" alt="Sediments">
+                        <img src="images/projects/sediments/1644084553152.webp" alt="Sediments" loading="lazy">
                         <div class="project-info-overlay">
                             <div class="project-title">Sediments</div>
                             <div class="project-meta">
@@ -127,7 +134,7 @@
                 <!-- LIMBO Project -->
                 <div class="project-item">
                     <a href="projects/limbo.html">
-                        <img src="images/projects/limbo/main.webp" alt="LIMBO">
+                        <img src="images/projects/limbo/main.jpg" alt="LIMBO" loading="lazy">
                         <div class="project-info-overlay">
                             <div class="project-title">LIMBO</div>
                             <div class="project-meta">
@@ -141,7 +148,7 @@
                 <!-- Ignorance Project -->
                 <div class="project-item">
                     <a href="projects/os-nossos-seres-sao-iguais.html">
-                        <img src="images/projects/os-nossos-seres-sao-iguais/1.webp" alt="Our Beings Are Alike">
+                        <img src="images/projects/os-nossos-seres-sao-iguais/1.webp" alt="Our Beings Are Alike" loading="lazy">
                         <div class="project-info-overlay">
                             <div class="project-title">Our Beings Are Alike</div>
                             <div class="project-meta">
@@ -155,7 +162,7 @@
                 <!-- O Caço Project -->
                 <div class="project-item">
                     <a href="projects/o-caco.html">
-                        <img src="images/projects/o-caco/1.webp" alt="O Caco">
+                        <img src="images/projects/o-caco/1.webp" alt="O Caco" loading="lazy">
                         <div class="project-info-overlay">
                             <div class="project-title">O Caco</div>
                             <div class="project-meta">
@@ -169,7 +176,7 @@
                 <!-- A Study in 3D Project -->
                 <div class="project-item">
                     <a href="projects/a-study-in-3d.html">
-                        <img src="images/projects/study in 3d/main.webp" alt="A Study in 3D">
+                        <img src="images/projects/study in 3d/main.webp" alt="A Study in 3D" loading="lazy">
                         <div class="project-info-overlay">
                             <div class="project-title">A Study in 3D</div>
                             <div class="project-meta">
@@ -183,7 +190,7 @@
                 <!-- I Can't Live Without You Project -->
                 <div class="project-item">
                     <a href="projects/i-cant-live-without-you.html">
-                        <img src="images/projects/Gemini_Generated_Image_uvusrtuvusrtuvus.jpg" alt="I Can't Live Without You">
+                        <img src="images/projects/Gemini_Generated_Image_uvusrtuvusrtuvus.jpg" alt="I Can't Live Without You" loading="lazy">
                         <div class="project-info-overlay">
                             <div class="project-title">I Can't Live Without You</div>
                             <div class="project-meta">
@@ -197,7 +204,7 @@
                 <!-- Forget to Protect Project -->
                 <div class="project-item">
                     <a href="projects/forget-to-protect.html">
-                        <img src="images/projects/forget-to-protect/main.webp" alt="Forget to Protect">
+                        <img src="images/projects/forget-to-protect/main.webp" alt="Forget to Protect" loading="lazy">
                         <div class="project-info-overlay">
                             <div class="project-title">Forget to Protect</div>
                             <div class="project-meta">
@@ -211,7 +218,7 @@
                 <!-- Chamamento Project -->
                 <div class="project-item">
                     <a href="projects/chamamento.html">
-                        <img src="images/projects/chamamento/main-performance.jpg" alt="Chamamento">
+                        <img src="images/projects/chamamento/main-performance.jpg" alt="Chamamento" loading="lazy">
                         <div class="project-info-overlay">
                             <div class="project-title">Chamamento</div>
                             <div class="project-meta">
@@ -225,16 +232,24 @@
         </section>
 
         <section id="products">
-            <h2 data-lang="en">PRODUCTS</h2>
-            <h2 data-lang="pt">PRODUTOS</h2>
+            <h2 data-lang="en">PRODUCTS AND RESOURCES</h2>
+            <h2 data-lang="pt">PRODUTOS E RECURSOS</h2>
             
-            <p data-lang="en">Explore my 3D assets, tools, and educational resources available on Blender Market and Gumroad.</p>
-            <p data-lang="pt">Explore os meus recursos 3D, ferramentas e recursos educacionais disponíveis no Blender Market e Gumroad.</p>
+            <p data-lang="en">Explore my 3D assets, tools, and resources for creative development.</p>
+            <p data-lang="pt">Explore os meus recursos 3D, ferramentas e recursos para desenvolvimento criativo.</p>
+            
+            <!-- Products Section -->
+            <div class="subsection-divider" data-lang="en">
+                <h3>Products</h3>
+            </div>
+            <div class="subsection-divider" data-lang="pt">
+                <h3>Produtos</h3>
+            </div>
             
             <div class="project-grid">
                 <div class="project-item">
                     <a href="https://superhivemarket.com/products/vertex-group-to-sculpt-mask" target="_blank">
-                        <img src="images/products/product-1.jpg" alt="Vertex Group to Sculpt Mask">
+                        <img src="images/products/product-1.jpg" alt="Vertex Group to Sculpt Mask" loading="lazy">
                         <div class="project-info-overlay">
                             <div class="project-title">Vertex Group to Sculpt Mask</div>
                             <div class="project-meta">
@@ -246,12 +261,35 @@
                 </div>
                 <div class="project-item">
                     <a href="https://superhivemarket.com/products/voxel-master" target="_blank">
-                        <img src="images/products/product-2.jpg" alt="Voxel Master">
+                        <img src="images/products/product-2.jpg" alt="Voxel Master" loading="lazy">
                         <div class="project-info-overlay">
                             <div class="project-title">Voxel Master</div>
                             <div class="project-meta">
                                 <div class="project-year">2024</div>
                                 <div class="project-category">Superhive Market</div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Resources Section -->
+            <div class="subsection-divider" data-lang="en">
+                <h3>Resources</h3>
+            </div>
+            <div class="subsection-divider" data-lang="pt">
+                <h3>Recursos</h3>
+            </div>
+            
+            <div class="project-grid">
+                <div class="project-item">
+                    <a href="https://github.com/NuninhoSousa25/3DGS_Babylonjs_based" target="_blank">
+                        <img src="images/products/3dgs-babylon.jpg" alt="3D Gaussian Splatting Babylon.js" loading="lazy">
+                        <div class="project-info-overlay">
+                            <div class="project-title">3D Gaussian Splatting</div>
+                            <div class="project-meta">
+                                <div class="project-year">2024</div>
+                                <div class="project-category">Babylon.js Implementation</div>
                             </div>
                         </div>
                     </a>
@@ -265,7 +303,7 @@
             
             <div class="about-container">
                 <div class="about-image-container">
-                    <img src="images/profile/1.jpeg" alt="Nuno Sousa - 3D Artist" class="about-image">
+                    <img src="images/profile/1.jpeg" alt="Nuno Sousa - 3D Artist" class="about-image" loading="lazy">
                 </div>
                 <div class="about-text">
                     <div data-lang="en">

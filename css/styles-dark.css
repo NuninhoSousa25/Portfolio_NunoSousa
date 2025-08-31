@@ -45,10 +45,10 @@ body {
     overflow-x: hidden;
 }
 
-/* Prevent scroll on body when mobile menu is open */
-body.mobile-menu-open {
+/* Allow scroll on body when mobile menu is open - removed overflow restriction */
+/* body.mobile-menu-open {
     overflow: hidden;
-}
+} */
 
 
 /* Enhanced Typography */
@@ -344,16 +344,17 @@ p {
     width: 100%;
     height: 100%;
     opacity: 0;
-    transition: all 1.5s ease;
+    transition: opacity 1.5s ease;
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden; /* Ensure images don't overflow */
-
+    overflow: hidden;
+    z-index: 1;
 }
 
 .slide.active {
     opacity: 1;
+    z-index: 2;
 }
 
 .slide img {
@@ -362,10 +363,11 @@ p {
     object-fit: cover;
     transition: transform 8s ease;
     cursor: pointer;
+    transform-origin: center center;
 }
 
 .slide.active img {
-    transform: scale(1.05);
+    transform: scale(1.02);
 }
 
 /* Enhanced Project Grid */
@@ -380,7 +382,7 @@ p {
 .project-item {
     position: relative;
     overflow: hidden;
-    border: 1px solid var(--border-color);
+    border: none;
     height: 300px;
     transition: all var(--transition-normal);
     background: var(--secondary-bg);
@@ -422,7 +424,7 @@ p {
     bottom: 0;
     left: 0;
     width: 100%;
-    background: rgba(21, 21, 21, 0.95);
+    background: rgba(21, 21, 21, 0.75);
     padding: 1.5rem;
     z-index: 3;
     pointer-events: none;
@@ -479,15 +481,7 @@ p {
 }
 
 
-.project-item a::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 4;
-}
+/* Removed problematic overlay that was covering images */
 
 /* Enhanced About Section */
 .about-container {
@@ -824,14 +818,13 @@ footer .footer-content {
     overflow: hidden;
     cursor: pointer;
     transition: all var(--transition-normal);
-    border: 1px solid var(--border-color);
+    border: none;
     display: block; /* Ensure proper masonry behavior */
 }
 
 .project-gallery.masonry .gallery-item:hover {
-    transform: scale(1.02);
-    border-color: var(--accent-color);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
 }
 
 .project-gallery.masonry .gallery-item img,
@@ -1079,9 +1072,8 @@ footer .footer-content {
 }
 
 .gallery-item:hover {
-    transform: translateY(-5px) scale(1.02);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-    border-color: var(--border-hover);
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
 }
 
 .gallery-item img, .gallery-item video, .gallery-item iframe {
@@ -1213,31 +1205,6 @@ footer .footer-content {
 /* ========= UI COMPONENTS ============ */
 /* ===================================== */
 
-/* Background particles optimization */
-.background-particles {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: -1;
-    opacity: 0.15;
-}
-
-.particle {
-    position: absolute;
-    width: 2px;
-    height: 2px;
-    background: var(--accent-color);
-    border-radius: 50%;
-    animation: float 15s infinite linear;
-}
-
-@keyframes float {
-    0% { transform: translateY(0px) rotate(0deg); }
-    100% { transform: translateY(-100vh) rotate(360deg); }
-}
 
 /* Notification styles */
 .notification {
@@ -1770,4 +1737,36 @@ img[loading="lazy"].loaded {
 /* Make sure email icon is clearly interactive */
 .email-copy .icon-label {
     user-select: none; /* Prevent text selection */
+}
+
+/* Subsection divider styling */
+.subsection-divider {
+    margin: 3rem 0 2rem;
+    text-align: center;
+    position: relative;
+}
+
+.subsection-divider::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--border-color);
+    z-index: 1;
+}
+
+.subsection-divider h3 {
+    display: inline-block;
+    background: var(--primary-bg);
+    padding: 0 2rem;
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: normal;
+    color: var(--accent-color);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    position: relative;
+    z-index: 2;
 }

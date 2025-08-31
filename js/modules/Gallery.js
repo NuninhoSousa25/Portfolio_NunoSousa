@@ -91,6 +91,7 @@ export class FullscreenGallery {
     collectMedia() {
         // Collect all gallery media (images, videos, and YouTube)
         const galleryMedia = document.querySelectorAll('.gallery-clickable, .gallery-item img, .gallery-item video');
+        console.log('Gallery: Found', galleryMedia.length, 'media elements');
         this.media = Array.from(galleryMedia).map(element => {
             const tagName = element.tagName.toLowerCase();
             const isVideo = tagName === 'video';
@@ -122,6 +123,7 @@ export class FullscreenGallery {
         this.media.forEach((mediaData, index) => {
             mediaData.element.addEventListener('click', (e) => {
                 e.preventDefault();
+                console.log('Gallery: Opening gallery with media:', mediaData);
                 this.openGallery(index);
             });
             
@@ -356,6 +358,7 @@ export class FullscreenGallery {
         if (!this.media.length) return;
         
         const currentMedia = this.media[this.currentIndex];
+        console.log('Gallery: Updating to media:', currentMedia);
         const elements = [this.fullscreenImg, this.fullscreenVideo, this.fullscreenYoutube];
         
         // Hide all elements and reset

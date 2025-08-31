@@ -32,9 +32,11 @@ class App {
             // Initialize all modules
             this.modules.navigation = new Navigation();
             this.modules.slideshow = new Slideshow();
-            this.modules.gallery = initFullscreenGallery();
             this.modules.uiAnimations = new UIAnimations();
             this.modules.theme = new Theme();
+            
+            // Initialize gallery last to ensure it collects all clickable elements (including slideshow)
+            this.modules.gallery = initFullscreenGallery();
             
             // Initialize image sources (if imageConfig is loaded)
             if (this.modules.uiAnimations.initImageSources) {

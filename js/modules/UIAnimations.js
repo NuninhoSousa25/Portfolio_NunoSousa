@@ -137,32 +137,10 @@ export class UIAnimations {
      * Theme and visual enhancement elements
      */
     initThemeElements() {
-        // Add dynamic background particles (optional)
-        this.createBackgroundParticles();
-        
         // Add hover effects to project items
         this.enhanceProjectItems();
     }
     
-    /**
-     * Create subtle background particles
-     */
-    createBackgroundParticles() {
-        const particleContainer = document.createElement('div');
-        particleContainer.className = 'background-particles';
-        
-        // Create particles with better performance
-        for (let i = 0; i < 15; i++) { // Reduced from 20 to 15 for better performance
-            const particle = document.createElement('div');
-            particle.className = 'particle';
-            particle.style.left = `${Math.random() * 100}%`;
-            particle.style.top = `${Math.random() * 100}%`;
-            particle.style.animationDelay = `${Math.random() * 15}s`;
-            particleContainer.appendChild(particle);
-        }
-        
-        document.body.appendChild(particleContainer);
-    }
     
     /**
      * Enhance project item interactions
