@@ -3,3 +3,6 @@
 -remove image borthers, 
 
 -alow to click on slide show to expand/open
+
+add Products & Repos section /Tools & Resources):
+
