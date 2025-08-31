@@ -17,7 +17,7 @@
 const ImageConfig = {
     slideshow: {
         image1: {
-            src: 'images/slideshow/1.jpg',
+            src: 'images/slideshow/1.png',
             alt: 'Nuno Sousa Artwork 1'
         },
         image2: {
@@ -26,30 +26,32 @@ const ImageConfig = {
         },
         image3: {
             src: 'images/slideshow/3.jpg',
-            alt: 'Nuno Sousa Artwork 3'
+            alt: 'Digital Debris Frame'
+        },
+
+        image4: {
+            src: 'images/slideshow/0(5).jpg',
+            alt: 'Some fun'
         }
     },
     
     profile: {
         main: {
-            src: 'images/profile/1.jpeg',
+            src: 'images/profile/1.jpg',
             alt: 'Nuno Sousa - 3D Artist'
         }
     },
     
     products: {
         vertexGroupToSculptMask: {
-            src: 'images/products/Product-1.jpg',
+            src: 'images/products/Product-1.png',
             alt: 'Vertex Group to Sculpt Mask'
         },
         voxelMaster: {
             src: 'images/products/Product-2.jpg',
             alt: 'Voxel Master'
         },
-        product3: {
-            src: 'images/products/Product-3.jpg',
-            alt: 'Product 3'
-        }
+        
     },
     
     projects: {
@@ -80,10 +82,7 @@ const ImageConfig = {
                     alt: 'Digital Debris - Close-up Detail'
                 }
             ],
-            video: {
-                src: 'images/1.mp4',
-                alt: 'Digital Debris - Process Video'
-            }
+          
         },
         
         comingSoon: {
@@ -107,10 +106,21 @@ const ImageConfig = {
                     src: 'images/projects/limbo/1638058925360.jpg',
                     alt: 'Limbo - Gallery Image 2'
                 },
+
+                 {
+                    src: 'images/projects/limbo/untitled3.jpg',
+                    alt: 'Limbo - Gallery Image 2'
+                },
+
                 {
                     src: 'images/projects/limbo/untitled2.png',
                     alt: 'Limbo - Gallery Image 3'
-                }
+                },
+                {
+                    src: 'images/projects/limbo/1755350639640.jpg',
+                    alt: 'Limbo - Gallery Image 2'
+                },
+               
             ],
             video: {
                 src: 'images/projects/limbo/VID_20211021_224756.mp4',
